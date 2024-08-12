@@ -15,7 +15,9 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('age_group');
             $table->string('domain');
+            $table->boolean('isCritical');
             $table->string('description');
+            $table->timestamps();
         });
     }
 
