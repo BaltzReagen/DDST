@@ -24,3 +24,17 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//CUSTOM
+//form page
+Route::get("form", function(){
+    return view('form');
+});
+
+Route::get("login", function(){
+    return view('login');
+});
+
+Route::get("register", function(){
+    return view('register');
+});

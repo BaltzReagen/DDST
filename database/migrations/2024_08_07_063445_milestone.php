@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('domain');
             $table->boolean('isCritical');
             $table->string('description');
+            $table->string('youtube_title');
+            $table->string('key');
+            $table->string('image_path');
             $table->timestamps();
         });
     }

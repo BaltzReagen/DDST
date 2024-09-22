@@ -17,5 +17,8 @@ class Milestone extends Model
         'domain',
         'isCritical',
         'description',
+        'youtube_title',
+        'key',
+        'image',
     ];
 }
