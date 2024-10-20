@@ -18,14 +18,24 @@
         <div class="login-container">
             <div class="login-box">
                 <h1>LOGIN</h1>
-                <form action="#">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <form action="{{ route('login.store') }}" method="POST">
+                    @csrf
                     <div class="login-form-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" placeholder="Enter Email">
                     </div>
                     <div class="login-form-group">
                         <label for="password">Password</label>
-                        <input type="password" name="password" id="password">
+                        <input type="password" name="password" id="password" placeholder="Enter Password">
                     </div>
                     <button type="submit" class="login-page-btn" id="login-page-btn">LOGIN</button>
                 </form>

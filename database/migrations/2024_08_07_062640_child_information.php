@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('children', function (Blueprint $table){
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('belongsTo');
             $table->date('date_of_birth');
             $table->char('gender');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('belongsTo')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

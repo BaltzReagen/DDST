@@ -15,7 +15,8 @@ return new class extends Migration
             $table->increments('id');
             $table->string('username');
             $table->string('password');
-            $table->string('email');
+            $table->boolean('isGuest');
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

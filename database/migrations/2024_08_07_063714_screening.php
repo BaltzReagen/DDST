@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('screenings', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->date('screening_date');
-            $table->string('screening_result');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->string('fname');
+            $table->string('child_name');
+            $table->date('child_dob');
+            $table->char('child_gender');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

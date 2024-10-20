@@ -1,11 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ScreeningController;
 
 /*
-|--------------------------------------------------------------------------
+|---------------------------------------------------------------------------
 | Web Routes
-|--------------------------------------------------------------------------
+|---------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
@@ -13,28 +17,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Default route
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Authentication routes
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Home route
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-//CUSTOM
-//form page
+// Custom routes
+// Form page
 Route::get("form", function(){
     return view('form');
 });
 
-Route::get("login", function(){
-    return view('login');
-});
+// Login and Registration routes using controllers
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'create'])->name('register.store');
 
-Route::get("register", function(){
-    return view('register');
-});
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.store');
+
+// Screening routes
+Route::post('/screenings', [ScreeningController::class, 'store'])->name('screenings.store');
