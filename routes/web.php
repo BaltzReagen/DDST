@@ -5,6 +5,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ScreeningController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 /*
 |---------------------------------------------------------------------------
@@ -43,3 +46,17 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.store');
 
 // Screening routes
 Route::post('/screenings', [ScreeningController::class, 'store'])->name('screenings.store');
+
+// Define the dashboard route
+Route::get('/dashboard', function () {
+    return view('dashboard'); // Ensure this points to your actual view file
+})->name('dashboard')->middleware(['auth', 'no.cache']);
+
+// Logout routes
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/login'); // Redirect to the login page after logout
+})->name('logout');

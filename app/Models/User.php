@@ -2,18 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Foundation\Auth\User as Authenticatable; // This needs to be extended
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class User extends Authenticatable // Now extending Authenticatable
 {
-    use HasFactory;
+    use Notifiable, HasFactory;
 
     protected $fillable = [
-        'username', // Add this line
+        'username',
         'password',
         'isGuest',
         'email',
     ];
 
+    protected $hidden = [
+        'password', // Hide sensitive fields
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
