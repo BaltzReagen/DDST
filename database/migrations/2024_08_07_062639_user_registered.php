@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table){
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('username');
+            $table->string('username')->unique(); // Username should be unique
             $table->string('password');
-            $table->boolean('isGuest');
+            $table->boolean('isGuest')->default(false); // Default value for registered users
             $table->string('email')->nullable();
             $table->timestamps();
+
+            // Optional: Add index for better query performance
+            $table->index('email');
         });
     }
 

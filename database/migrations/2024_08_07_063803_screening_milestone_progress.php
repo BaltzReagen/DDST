@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('screening_milestone_progress', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('screening_id');
-            $table->unsignedInteger('milestone_id');
-            $table->boolean('is_achieved');
+            $table->json('responses'); // JSON column to store all milestone responses
             $table->timestamps();
-
+        
             $table->foreign('screening_id')->references('id')->on('screenings')->onDelete('cascade');
-            $table->foreign('milestone_id')->references('id')->on('milestones')->onDelete('cascade');
         });
     }
 

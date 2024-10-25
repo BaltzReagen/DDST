@@ -28,12 +28,18 @@
             }
         }
     </script>
+
+    <script>
+        document.getElementById('back-btn').addEventListener('click', function(){
+            window.location = '{{ url('form') }}';
+        });
+     </script>
 </head>
 
 <body>
     <div class="login">
         <div class="back-button">
-            <button onclick="window.history.back()">⬅ Back</button>
+            <button class="back-btn" onclick="window.location='{{ url('form') }}'">Return</button>
         </div>
 
         <div class="login-container">

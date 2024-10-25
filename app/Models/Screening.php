@@ -9,5 +9,5 @@ class Screening extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'fname', 'child_name', 'child_dob', 'child_gender'];
+    protected $fillable = ['user_id', 'fname', 'child_name', 'child_dob', 'child_age_in_months', 'child_gender'];
 }

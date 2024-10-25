@@ -60,3 +60,17 @@ Route::post('/logout', function (Request $request) {
 
     return redirect('/login'); // Redirect to the login page after logout
 })->name('logout');
+
+//Questionnaire
+Route::get('/questionnaire/{childId}', [ScreeningController::class, 'showQuestionnaire'])->name('questionnaire.show');
+Route::post('/submit-milestone', [ScreeningController::class, 'submitMilestone'])->name('submit.milestone');
+
+//Thank You Page
+Route::get('/thank-you', function () {
+    return view('thankyou'); // Ensure you have a thankyou.blade.php view file.
+})->name('thank.you');
+
+//Back Button
+Route::get('/form', function () {
+    return view('form');
+})->name('form');

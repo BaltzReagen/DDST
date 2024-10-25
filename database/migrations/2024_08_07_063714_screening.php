@@ -17,9 +17,11 @@ return new class extends Migration
             $table->string('fname');
             $table->string('child_name');
             $table->date('child_dob');
-            $table->char('child_gender');
+            $table->integer('child_age_in_months');
+            $table->char('child_gender', 1); // Assuming 'M' or 'F' for gender
             $table->timestamps();
 
+            // Foreign key relationship with 'users' table
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('screening_milestone_progress');
+        Schema::dropIfExists('screenings'); // Drop the 'screenings' table
     }
 };
