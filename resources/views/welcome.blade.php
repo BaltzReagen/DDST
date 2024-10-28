@@ -16,7 +16,7 @@
                 <div class="section">
                     <h2>What is Child Developmental Screening Tool?</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pharetra ligula a enim fringilla, nec commodo dolor tincidunt. Suspendisse convallis dolor eu risus laoreet suscipit. Maecenas scelerisque ac magna non tempor. Vestibulum at dolor sem. Etiam aliquet tincidunt scelerisque. Aliquam turpis arcu, ornare id sem in, ornare pharetra tellus. Proin finibus, augue at tincidunt fringilla, eros diam suscipit urna, ut pretium nunc augue vitae leo. Mauris ante erat, pellentesque eu elit non, luctus porttitor elit. Nulla vel finibus dui.</p>
-                    <button class="cta-button" id="cta-button">Take Test Now!</button>
+                    <button class="submit-btn" id="cta-button">Take Test Now!</button>
                 </div>
                 <div class="section">
                     <h2>Important Notice</h2>

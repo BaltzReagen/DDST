@@ -57,38 +57,42 @@ class ScreeningController extends Controller
     }
 
 
-    public function showQuestionnaire($screeningId) {
-        // Fetch the screening data for the guest or registered user
-        $screening = Screening::findOrFail($screeningId); // Fetch screening based on ID
-        $childAgeInMonths = $screening->child_age_in_months; // Child's age in months from screening data
-    
-        // Determine the appropriate checklist based on child's age
-        $milestoneAgeGroups = [1, 3, 6, 9, 12, 18, 24, 36, 48, 60, 72]; // Age groups in months
-        $selectedAgeGroup = 1; // Default to 1 month
-    
-        foreach (array_reverse($milestoneAgeGroups) as $ageGroup) {
-            if ($childAgeInMonths >= $ageGroup) {
-                $selectedAgeGroup = $ageGroup;
-                break;
+    public function showQuestionnaire($screeningId)
+    {
+        $screening = Screening::findOrFail($screeningId);
+        $childAgeInMonths = $screening->child_age_in_months;
+
+        // Define the milestone age groups in months, capping at 6 years (72 months)
+        $milestoneAgeGroups = [1, 3, 6, 9, 12, 18, 24, 36, 48, 60, 72];
+        $selectedAgeGroup = 1;
+
+        // Set the age group to 72 months (6 years) if the child's age is over 72 months
+        if ($childAgeInMonths > 72) {
+            $selectedAgeGroup = 72;
+        } else {
+            foreach (array_reverse($milestoneAgeGroups) as $ageGroup) {
+                if ($childAgeInMonths >= $ageGroup) {
+                    $selectedAgeGroup = $ageGroup;
+                    break;
+                }
             }
         }
-    
+
         // Fetch milestone questions based on the selected age group
         $milestoneQuestions = Milestone::where('age_group', $selectedAgeGroup)->get();
-    
-        // Only fetch distinct domains that have questions for the selected age group
         $domainsWithQuestions = Milestone::where('age_group', $selectedAgeGroup)
                                 ->distinct()
                                 ->pluck('domain');
-    
-        // Format title to display '1 year' instead of '12 months'
-        $formattedTitle = $selectedAgeGroup >= 12 ? ($selectedAgeGroup / 12) . ' Year' : $selectedAgeGroup . ' Month';
-    
-        // Pass the data to the view
+
+        // Format the title to show only years if age is 12 months or more
+        $formattedTitle = $selectedAgeGroup >= 12 
+            ? ($selectedAgeGroup / 12) . ' Year'
+            : $selectedAgeGroup . ' Month';
+
         return view('questionnaire', [
             'child_age_in_months' => $formattedTitle,
             'milestoneQuestions' => $milestoneQuestions,
-            'domains' => $domainsWithQuestions, // Only pass domains with questions
+            'domains' => $domainsWithQuestions,
         ]);
     }
 
