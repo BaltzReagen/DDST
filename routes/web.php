@@ -62,7 +62,7 @@ Route::post('/logout', function (Request $request) {
 })->name('logout');
 
 //Questionnaire
-Route::get('/questionnaire/{childId}', [ScreeningController::class, 'showQuestionnaire'])->name('questionnaire.show');
+Route::get('/questionnaire/{childId}/{ageGroup?}', [ScreeningController::class, 'showQuestionnaire'])->name('questionnaire.show');
 Route::post('/submit-milestone', [ScreeningController::class, 'submitMilestone'])->name('submit.milestone');
 
 //Thank You Page

@@ -6,48 +6,58 @@
     <title>{{ $child_age_in_months }} Month Milestone Checklist</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 </head>
+
 <body>
 
-<div class="questionnaire-container">
-    <h2>{{ $child_age_in_months }} Milestone Checklist (* = Critical)</h2>
-
-    <!-- Navigation for domain types -->
-    <div class="domain-tabs">
-        @foreach ($domains as $domain)
-            @if ($milestoneQuestions->where('domain', $domain)->count() > 0)
-                <button class="tab-button" data-domain="{{ $domain }}">{{ ucfirst(str_replace('_', ' ', $domain)) }}</button>
-            @endif
-        @endforeach
+    <div class="back-button">
+        <button class="back-btn" id="returnButton">Return</button>
     </div>
 
-    <!-- Form to submit answers -->
-    <form id="milestone-form" method="POST" action="{{ route('submit.milestone') }}">
-        @csrf
+    <div class="questionnaire-container">
+        <h2>{{ $child_age_in_months }} Milestone Checklist (* = Critical)</h2>
 
-        @foreach($milestoneQuestions as $question)
-        <div class="milestone-question" data-domain="{{ $question->domain }}">
-            <div class="question-text">
-                <p>{{ $question->description }} @if($question->isCritical) (*) @endif</p>
-            </div>
-            <div class="media">
-                @if($question->youtube_title !== 'unavailable')
-                    <iframe src="https://www.youtube.com/embed/{{ $question->key }}" frameborder="0" allowfullscreen></iframe>
-                @else
-                    <img src="{{ asset('images/image-coming-soon.jpg') }}" alt="Image Coming Soon">
+        <!-- Navigation for domain types -->
+        <div class="domain-tabs">
+            @foreach ($domains as $domain)
+                @if ($milestoneQuestions->where('domain', $domain)->count() > 0)
+                    <button class="tab-button" data-domain="{{ $domain }}">{{ ucfirst(str_replace('_', ' ', $domain)) }}</button>
                 @endif
-            </div>
-            <div class="response-buttons">
-                <input type="hidden" name="milestones[{{ $question->id }}]" id="milestone-{{ $question->id }}" value="">
-                <button type="button" class="yes-button" data-milestone-id="{{ $question->id }}">Yes</button>
-                <button type="button" class="not-yet-button" data-milestone-id="{{ $question->id }}">Not Yet</button>
-            </div>
+            @endforeach
         </div>
-        @endforeach
 
-        <!-- Submit button at the end -->
-        <button type="submit" class="submit-button">Submit</button>
-    </form>
-</div>
+        <!-- Form to submit answers -->
+        <form id="milestone-form" method="POST" action="{{ route('submit.milestone') }}">
+            @csrf
+            <input type="hidden" name="screening_id" value="{{ $screeningId }}">
+            @foreach($milestoneQuestions as $question)
+            <div class="milestone-question" data-domain="{{ $question->domain }}">
+                <div class="question-text">
+                    <p>{{ $question->description }} @if($question->isCritical) (*) @endif</p>
+                </div>
+                <div class="media">
+                    @if($question->youtube_title !== 'unavailable')
+                        <iframe src="https://www.youtube.com/embed/{{ $question->key }}" frameborder="0" allowfullscreen></iframe>
+                    @else
+                        <img src="{{ asset('images/image-coming-soon.jpg') }}" alt="Image Coming Soon">
+                    @endif
+                </div>
+                <div class="response-buttons">
+                    <input type="hidden" name="milestones[{{ $question->id }}]" id="milestone-{{ $question->id }}" value="">
+                    <button type="button" class="yes-button" data-milestone-id="{{ $question->id }}">Yes</button>
+                    <button type="button" class="not-yet-button" data-milestone-id="{{ $question->id }}">Not Yet</button>
+                </div>
+            </div>
+            @endforeach
+
+            <!-- Submit button at the end -->
+            <button type="submit" class="submit-button">Submit</button>
+            <div id="overlay" style="display: none;"></div>
+            <div id="popup-modal" style="display: none;">
+                <p>Since the child failed to achieve all the milestones expected of their age, they now need to complete the previous age checklist to assess their current developmental age.</p>
+                <button type="button" id="understood-btn">Understood</button>
+            </div>
+        </form>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -56,6 +66,67 @@
             const form = document.getElementById('milestone-form');
             const tabButtons = document.querySelectorAll('.tab-button');
             const questions = document.querySelectorAll('.milestone-question');
+            const returnButton = document.getElementById('returnButton');
+            const modal = document.getElementById("popup-modal");
+            const understoodButton = document.getElementById("understood-btn");
+            const submitButton = document.querySelector('.submit-button');
+            const overlay = document.getElementById("overlay");
+            
+            // Display the modal
+            function showModal() {
+                overlay.style.display = "block";
+                modal.style.display = "block";
+            }       
+
+            // Handle "Understood" button click to proceed
+            understoodButton.addEventListener("click", function() {
+                overlay.style.display = "block";
+                modal.style.display = "none";
+                form.submit(); // Submit the form after understanding
+            });
+
+            // Check milestone criteria before form submission
+            function checkMilestoneBeforeSubmit() {
+                let isCriticalFailed = false;
+                let nonCriticalFailures = 0;
+
+                document.querySelectorAll('.milestone-question').forEach(question => {
+                    const input = question.querySelector('input[type="hidden"]');
+                    const isCritical = question.querySelector('.question-text').innerText.includes('*');
+                    
+                    if (input.value === "0") { // "Not Yet" response
+                        if (isCritical) {
+                            isCriticalFailed = true;
+                        } else {
+                            nonCriticalFailures++;
+                        }
+                    }
+                });
+
+                if (isCriticalFailed || nonCriticalFailures >= 2) {
+                    showModal();
+                    return false; // Prevent form from submitting immediately
+                }
+                return true;
+            }
+
+            // Separate the tab functionality from form submission
+            submitButton?.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent immediate submission
+
+                if (checkMilestoneBeforeSubmit()) {
+                    form.submit(); // Submit only if criteria are met
+                }
+            });
+            
+            // Confirmation popup for Return button
+            returnButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                const confirmReturn = confirm("Are you sure you want to return? Your progress will not be saved.");
+                if (confirmReturn) {
+                    window.location.href = '{{ url("form") }}';
+                }
+            });
 
             // Tab switching functionality
             tabButtons.forEach(button => {

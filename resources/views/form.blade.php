@@ -11,6 +11,10 @@
     </head>
 
     <body>
+        <div class="back-button">
+            <button class="back-btn" onclick="window.location='{{ url('/') }}'">Return</button>
+        </div>
+
         <div class="form-container">
             <h1>Take Test as a Guest</h1>
             <p>As a guest you get instant results, however you will receive a limited test report. For the full test report register <a href="{{ route('register') }}">here</a>.</p>

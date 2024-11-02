@@ -57,58 +57,111 @@ class ScreeningController extends Controller
     }
 
 
-    public function showQuestionnaire($screeningId)
-    {
+    public function showQuestionnaire($screeningId, $ageGroup = null) {
         $screening = Screening::findOrFail($screeningId);
         $childAgeInMonths = $screening->child_age_in_months;
-
-        // Define the milestone age groups in months, capping at 6 years (72 months)
-        $milestoneAgeGroups = [1, 3, 6, 9, 12, 18, 24, 36, 48, 60, 72];
-        $selectedAgeGroup = 1;
-
-        // Set the age group to 72 months (6 years) if the child's age is over 72 months
-        if ($childAgeInMonths > 72) {
-            $selectedAgeGroup = 72;
-        } else {
-            foreach (array_reverse($milestoneAgeGroups) as $ageGroup) {
-                if ($childAgeInMonths >= $ageGroup) {
-                    $selectedAgeGroup = $ageGroup;
-                    break;
-                }
-            }
-        }
-
+    
+        // Determine the age group if not provided
+        $selectedAgeGroup = $ageGroup ?? $this->determineAgeGroup($childAgeInMonths);
+    
         // Fetch milestone questions based on the selected age group
         $milestoneQuestions = Milestone::where('age_group', $selectedAgeGroup)->get();
         $domainsWithQuestions = Milestone::where('age_group', $selectedAgeGroup)
-                                ->distinct()
-                                ->pluck('domain');
-
+                                    ->distinct()
+                                    ->pluck('domain');
+    
         // Format the title to show only years if age is 12 months or more
         $formattedTitle = $selectedAgeGroup >= 12 
             ? ($selectedAgeGroup / 12) . ' Year'
             : $selectedAgeGroup . ' Month';
-
+    
         return view('questionnaire', [
+            'screeningId' => $screeningId,
             'child_age_in_months' => $formattedTitle,
             'milestoneQuestions' => $milestoneQuestions,
             'domains' => $domainsWithQuestions,
         ]);
     }
+    
+    // Helper function to determine the closest age group based on child's age
+    private function determineAgeGroup($childAgeInMonths) {
+        $milestoneAgeGroups = [1, 3, 6, 9, 12, 18, 24, 36, 48, 60, 72];
+        $selectedAgeGroup = 1;
+    
+        if ($childAgeInMonths > 72) {
+            return 72;
+        }
+    
+        foreach (array_reverse($milestoneAgeGroups) as $ageGroup) {
+            if ($childAgeInMonths >= $ageGroup) {
+                $selectedAgeGroup = $ageGroup;
+                break;
+            }
+        }
+    
+        return $selectedAgeGroup;
+    }
 
     public function submitMilestone(Request $request) {
-        $screeningId = 1; // Replace with the actual screening_id if applicable
+        $screeningId = $request->input('screening_id');
+
+        // Ensure screeningId exists and is valid
+        if (!$screeningId || !Screening::find($screeningId)) {
+            return redirect()->back()->withErrors(['error' => 'Invalid screening ID']);
+        }
+
         $milestones = $request->input('milestones'); // Array of milestone_id => response
+        
+        // Check responses for critical and non-critical milestones
+        $criticalFailed = 0;
+        $nonCriticalFailed = 0;
+        
+        foreach ($milestones as $milestoneId => $response) {
+            $milestone = Milestone::find($milestoneId);
+            
+            if ($response == 0) { // 'Not Yet' response
+                if ($milestone->isCritical) {
+                    $criticalFailed++;
+                } else {
+                    $nonCriticalFailed++;
+                }
+            }
+        }
+        
+        // Save the current responses in a new row in ScreeningMilestoneProgress
+        ScreeningMilestoneProgress::create([
+            'screening_id' => $screeningId,
+            'responses' => json_encode($milestones),
+        ]);
+        
+        // Check if we need to go back to a previous checklist
+        if ($criticalFailed >= 1 || $nonCriticalFailed >= 2) {
+            // Determine the previous age group to use
+            $currentAgeGroup = Milestone::where('id', array_keys($milestones)[0])->value('age_group');
+            $previousAgeGroup = $this->getPreviousAgeGroup($currentAgeGroup);
     
-        // Encode the milestones array to JSON
-        $responseJson = json_encode($milestones);
-    
-        // Save responses in a single row
-        ScreeningMilestoneProgress::updateOrCreate(
-            ['screening_id' => $screeningId],
-            ['responses' => $responseJson]
-        );
-    
-        return redirect()->route('thank.you')->with('success', 'Milestone responses saved successfully.');
+            if ($previousAgeGroup) {
+                // Redirect to the previous checklist
+                return redirect()->route('questionnaire.show', ['childId' => $screeningId, 'ageGroup' => $previousAgeGroup])
+                                 ->with('status', 'Please try the previous checklist.');
+            }
+        }
+        
+        // Redirect to the results page with a "Developing as Expected" message if no previous checklist was needed
+        return redirect()->route('thank.you')->with('status', 'The child is developing as expected.');
     }
+    
+    // Helper function to determine the previous age group
+    private function getPreviousAgeGroup($currentAgeGroup) {
+        $milestoneAgeGroups = [72, 60, 48, 36, 24, 18, 12, 9, 6, 3, 1]; // Age groups in months in descending order
+    
+        foreach ($milestoneAgeGroups as $index => $ageGroup) {
+            if ($ageGroup == $currentAgeGroup && isset($milestoneAgeGroups[$index + 1])) {
+                return $milestoneAgeGroups[$index + 1]; // Return the previous age group
+            }
+        }
+    
+        return null; // No previous age group (already at the lowest age group)
+    }
+    
 }

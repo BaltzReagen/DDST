@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('screening_history', function(Blueprint $table){
             $table->increments('id');
             $table->unsignedInteger('user_id');
+            $table->string('fname'); // Parent's first name
+            $table->string('child_name');
+            $table->date('child_dob');
+            $table->integer('child_age_in_months');
+            $table->char('child_gender', 1); // 'M' or 'F'
+            $table->json('responses'); // JSON column to store all milestone responses
             $table->date('screening_date');
             $table->string('screening_result');
             $table->timestamps();
