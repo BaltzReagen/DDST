@@ -70,14 +70,9 @@ class ScreeningController extends Controller
                                     ->distinct()
                                     ->pluck('domain');
     
-        // Format the title to show only years if age is 12 months or more
-        $formattedTitle = $selectedAgeGroup >= 12 
-            ? ($selectedAgeGroup / 12) . ' Year'
-            : $selectedAgeGroup . ' Month';
-    
         return view('questionnaire', [
             'screeningId' => $screeningId,
-            'child_age_in_months' => $formattedTitle,
+            'child_age_in_months' => (int)$selectedAgeGroup, // Cast to integer
             'milestoneQuestions' => $milestoneQuestions,
             'domains' => $domainsWithQuestions,
         ]);

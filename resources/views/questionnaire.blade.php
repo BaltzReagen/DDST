@@ -5,16 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $child_age_in_months }} Month Milestone Checklist</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
     <div class="back-button">
-        <button class="back-btn" id="returnButton">Return</button>
+        <button class="back-btn" id="returnButton"><span>←</span> Kembali</button>
     </div>
 
     <div class="questionnaire-container">
-        <h2>{{ $child_age_in_months }} Milestone Checklist (* = Critical)</h2>
+        <h2>
+            <span class="title-main">SENARAI SEMAK PENGESANAN {{ $child_age_in_months >= 18 ? 'PERKEMBANGAN KANAK-KANAK' : 'PERKEMBANGAN BAYI' }} {{ $child_age_in_months >= 24 ? floor($child_age_in_months/12) . ' TAHUN' : $child_age_in_months . ' BULAN' }}</span>
+            <span class="title-sub">(Untuk kegunaan {{ $child_age_in_months >= 18 ? 'kanak-kanak' : 'bayi' }} berumur {{ $child_age_in_months }} bulan hingga 
+                {{ $child_age_in_months == 1 ? '2' : 
+                ($child_age_in_months <= 9 ? $child_age_in_months + 2 : 
+                ($child_age_in_months <= 18 ? $child_age_in_months + 5 : 
+                $child_age_in_months + 11)) }} bulan bagi tujuan pendidikan)</span>
+        </h2>
 
         <!-- Navigation for domain types -->
         <div class="domain-tabs">
@@ -59,8 +67,18 @@
         </form>
     </div>
 
+    <footer class="dashboard-footer">
+        <p>&copy; 2024 Kevin - All Rights Reserved</p>
+    </footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Check if user abandoned a previous questionnaire
+            if (sessionStorage.getItem('questionnaire_abandoned') === 'true' && 
+                document.referrer.includes('questionnaire')) {
+                window.location.replace('{{ url("form") }}');
+            }
+
             const yesButtons = document.querySelectorAll('.yes-button');
             const notYetButtons = document.querySelectorAll('.not-yet-button');
             const form = document.getElementById('milestone-form');
@@ -124,7 +142,11 @@
                 e.preventDefault();
                 const confirmReturn = confirm("Are you sure you want to return? Your progress will not be saved.");
                 if (confirmReturn) {
-                    window.location.href = '{{ url("form") }}';
+                    // Clear browser history and redirect
+                    window.location.replace('{{ url("form") }}');
+                    
+                    // Additional security: Add entry to session storage
+                    sessionStorage.setItem('questionnaire_abandoned', 'true');
                 }
             });
 

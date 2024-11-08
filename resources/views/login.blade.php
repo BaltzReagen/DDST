@@ -8,22 +8,17 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
-
-        <script>
-            document.getElementById('back-btn').addEventListener('click', function(){
-                window.location = '{{ url('form') }}';
-            });
-        </script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     </head>
 
     <body class="login">
         <div class="back-button">
-            <button class="back-btn" onclick="window.location='{{ url('form') }}'">Return</button>
+            <button class="back-btn" onclick="window.location='{{ url('form') }}'"><span>←</span> Kembali</button>
         </div>
 
         <div class="login-container">
             <div class="login-box">
-                <h1>LOGIN</h1>
+                <h1>LOG MASUK</h1>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -36,24 +31,32 @@
                 <form action="{{ route('login.store') }}" method="POST">
                     @csrf
                     <div class="login-form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="Enter Email">
+                        <label for="email">Emel</label>
+                        <input type="email" name="email" id="email" placeholder="Masukkan Emel">
                     </div>
                     <div class="login-form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Enter Password">
+                        <label for="password">Kata Laluan</label>
+                        <input type="password" name="password" id="password" placeholder="Masukkan Kata Laluan">
                     </div>
-                    <button type="submit" class="login-page-btn" id="login-page-btn">LOGIN</button>
+                    <button type="submit" class="login-page-btn">LOG MASUK</button>
                 </form>
                 <div class="login-options">
-                    <a href="#">Forgot Login?</a>
-                    <a href="#">Sign Up</a>
+                    <a href="#">Lupa Log Masuk?</a>
+                    <a href="{{url('register')}}">Daftar</a>
                 </div>
             </div>
         </div>
 
         <footer class="login-footer">
-            <p>&copy; 2024 - Kevin - Alpha Build</p>
+            <p>&copy; 2024 - Kevin - All Rights Reserved</p>
         </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('.back-btn').addEventListener('click', function(){
+                    window.location = '{{ url("form") }}';
+                });
+            });
+        </script>
     </body>
 </html>

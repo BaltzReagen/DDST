@@ -3,83 +3,76 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>Form</title>
-
-        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     </head>
 
     <body>
-        <div class="back-button">
-            <button class="back-btn" onclick="window.location='{{ url('/') }}'">Return</button>
+        <div class="page-container">
+            <div class="back-button">
+                <button class="back-btn" onclick="window.location='{{ url('/') }}'">
+                    <span>←</span> Kembali
+                </button>
+            </div>
+
+            <div class="form-container">
+                <div class="form-header">
+                    <h1>Ambil Ujian sebagai Tetamu</h1>
+                    <p class="form-description">Sebagai tetamu anda akan mendapat keputusan segera, namun anda akan menerima laporan ujian yang terhad. 
+                        Untuk laporan ujian penuh <a href="{{ route('register') }}">daftar di sini</a>.
+                    </p>
+                    <p class="required-note">* Ruangan wajib diisi</p>
+                </div>
+
+                <form class="initial" action="{{ route('screenings.store') }}" method="POST">
+                    @csrf
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="first-name">Nama Pertama <span class="required">*</span></label>
+                            <input type="text" name="fname" id="first-name" placeholder="Masukkan Nama Pertama" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="child-name">Nama Anak <span class="required">*</span></label>
+                            <input type="text" name="child_name" id="child-name" placeholder="Masukkan Nama Anak" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Tarikh Lahir <span class="required">*</span></label>
+                            <input type="date" name="dob" id="dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Jantina <span class="required">*</span></label>
+                            <select name="gender" id="gender" required>
+                                <option value="" disabled selected>Pilih Jantina</option>
+                                <option value="M">Lelaki</option>
+                                <option value="F">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="primary-btn" type="submit">Ambil Ujian</button>
+                </form>
+
+                <div class="account-options">
+                    <div class="divider">
+                        <span>ATAU</span>
+                    </div>
+                    
+                    <div class="auth-buttons">
+                        <button class="secondary-btn" id="register-btn">Daftar untuk Akses Penuh</button>
+                        <p class="login-text">Sudah mempunyai akaun? <button class="text-btn" id="login-btn">Log masuk</button></p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="login-footer">
+                <p>&copy; 2024 - Kevin - All Rights Reserved</p>
+            </footer>
         </div>
 
-        <div class="form-container">
-            <h1>Take Test as a Guest</h1>
-            <p>As a guest you get instant results, however you will receive a limited test report. For the full test report register <a href="{{ route('register') }}">here</a>.</p>
-            <p><strong>* Required field</strong></p>
-
-            <form class="initial" action="{{ route('screenings.store') }}" method="POST">
-                @csrf
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="first-name">First Name *</label>
-                        <input type="text" name="fname" id="first-name" placeholder="Enter First Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="child-name">Child's Name *</label>
-                        <input type="text" name="child_name" id="child-name" placeholder="Enter Child's Name">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="dob">Date of Birth *</label>
-                        <input type="date" name="dob" id="dob">
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender *</label>
-                        <select name="gender" id="gender">
-                            <option value="" disabled selected>Select Gender</option>
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button class="submit-btn" type="submit">Take Test</button>
-            </form>
-
-            <div class="account-section">
-                <div class="account-option">
-                    <p>Take Test with an Account</p>
-                    <button class="register-btn" id="register-btn">Register Here!</button>
-                </div>
-                
-            </div>
-            <div class="account-section">
-                <div class="account-option">
-                    <p>Already Have One?</p>
-                    <button class="login-btn" id="login-btn">Login Here!</button>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <p>&copy; 2024 - Kevin - Alpha Build</p>
-        </footer>
+        <script>
+            document.getElementById('login-btn').addEventListener('click', () => window.location = '{{ url('login') }}');
+            document.getElementById('register-btn').addEventListener('click', () => window.location = '{{ url('register') }}');
+        </script>
     </body>
-    
-    <script>
-        document.getElementById('login-btn').addEventListener('click', function(){
-            window.location = '{{ url('login') }}';
-        });
-    </script>
-
-    <script>
-        document.getElementById('register-btn').addEventListener('click', function(){
-            window.location = '{{ url('register') }}';
-        });
-    </script>
 </html>

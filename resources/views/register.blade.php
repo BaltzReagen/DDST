@@ -8,6 +8,7 @@
 
     <!-- Fonts -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         function validatePasswords(event) {
             const password = document.getElementById('password').value;
@@ -15,36 +16,30 @@
             
             if(password.length < 8){
                 event.preventDefault();
-                alert('Password must be at least 8 characters long!');
+                alert('Kata laluan mestilah sekurang-kurangnya 8 aksara!');
                 document.getElementById('password').value='';
                 document.getElementById('confirm-password').value='';
             }
 
             if (password !== confirmPassword) {
                 event.preventDefault(); // Prevent form submission
-                alert('Passwords do not match!'); // Show alert message
+                alert('Kata laluan tidak sepadan!'); // Show alert message
                 document.getElementById('password').value='';
                 document.getElementById('confirm-password').value='';
             }
         }
     </script>
-
-    <script>
-        document.getElementById('back-btn').addEventListener('click', function(){
-            window.location = '{{ url('form') }}';
-        });
-     </script>
 </head>
 
 <body>
     <div class="login">
         <div class="back-button">
-            <button class="back-btn" onclick="window.location='{{ url('form') }}'">Return</button>
+            <button class="back-btn" onclick="window.location='{{ url('form') }}'"><span>←</span> Kembali</button>
         </div>
 
         <div class="login-container">
             <div class="login-box">
-                <h1>Create Account</h1>
+                <h1>Cipta Akaun</h1>
 
                 <!-- Display Validation Errors -->
                 @if ($errors->any())
@@ -61,29 +56,37 @@
                 <form action="{{ route('register.store') }}" method="POST" onsubmit="validatePasswords(event)">
                     @csrf
                     <div class="login-form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Enter Username" required>
+                        <label for="username">Nama Pengguna</label>
+                        <input type="text" id="username" name="username" placeholder="Masukkan Nama Pengguna" required>
                     </div>
                     <div class="login-form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="Enter Email" required>
+                        <label for="email">Emel</label>
+                        <input type="email" name="email" id="email" placeholder="Masukkan Emel" required>
                     </div>
                     <div class="login-form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Enter Password" required>
+                        <label for="password">Kata Laluan</label>
+                        <input type="password" name="password" id="password" placeholder="Masukkan Kata Laluan" required>
                     </div>
                     <div class="login-form-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" name="password_confirmation" id="confirm-password" placeholder="Confirm Password" required>
+                        <label for="confirm-password">Sahkan Kata Laluan</label>
+                        <input type="password" name="password_confirmation" id="confirm-password" placeholder="Sahkan Kata Laluan" required>
                     </div>
-                    <button type="submit" class="login-page-btn">REGISTER</button>
+                    <button type="submit" class="login-page-btn">DAFTAR</button>
                 </form>
             </div>
         </div>
     </div>
 
     <footer class="login-footer">
-        <p>&copy; 2024 - Kevin - Alpha Build</p>
+        <p>&copy; 2024 - Kevin - All Rights Reserved</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.back-btn').addEventListener('click', function(){
+                window.location = '{{ url("form") }}';
+            });
+        });
+    </script>
 </body>
 </html>
