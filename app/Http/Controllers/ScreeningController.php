@@ -8,13 +8,35 @@ use App\Models\User;
 use App\Models\ScreeningMilestoneProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class ScreeningController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if ($request->session()->has('questionnaire_completed')) {
+                return redirect()->route('form')->with('error', 'Assessment already completed');
+            }
+            
+            // Check if there's no screening in progress
+            if (!$request->session()->has('screening_in_progress') && 
+                $request->route()->getName() !== 'screenings.store') {
+                return redirect()->route('form');
+            }
+            
+            return $next($request);
+        })->only(['showQuestionnaire', 'submitMilestone']);
+    }
+
     public function store(Request $request)
     {
+
+        Session::put('screening_in_progress', true);
+
         // Validate the form input
         $request->validate([
             'fname' => 'required|string|max:255',
@@ -56,25 +78,38 @@ class ScreeningController extends Controller
         return redirect()->route('questionnaire.show', ['childId' => $screening->id]);
     }
 
+    public function showQuestionnaire($childId, $ageGroup = null)
+    {
+        
+        if (!Session::has('screening_in_progress')) {
+            return redirect()->route('form');
+        }
+        // Find the screening record
+        $screening = Screening::findOrFail($childId);
 
-    public function showQuestionnaire($screeningId, $ageGroup = null) {
-        $screening = Screening::findOrFail($screeningId);
+        // Check if this screening was completed
+        if (session('completed_screening_' . $childId)) {
+            return redirect()->route('screening.result', ['screeningId' => $childId])
+                ->with('warning', 'This assessment has already been completed.');
+        }
+
         $childAgeInMonths = $screening->child_age_in_months;
-    
+
         // Determine the age group if not provided
         $selectedAgeGroup = $ageGroup ?? $this->determineAgeGroup($childAgeInMonths);
-    
+
         // Fetch milestone questions based on the selected age group
         $milestoneQuestions = Milestone::where('age_group', $selectedAgeGroup)->get();
-        $domainsWithQuestions = Milestone::where('age_group', $selectedAgeGroup)
-                                    ->distinct()
-                                    ->pluck('domain');
-    
+        
+        // Get unique domains
+        $domains = $milestoneQuestions->pluck('domain')->unique()->values();
+
         return view('questionnaire', [
-            'screeningId' => $screeningId,
-            'child_age_in_months' => (int)$selectedAgeGroup, // Cast to integer
+            'childId' => $childId,
+            'child_age_in_months' => (int)$selectedAgeGroup,
             'milestoneQuestions' => $milestoneQuestions,
-            'domains' => $domainsWithQuestions,
+            'domains' => $domains,
+            'screening' => $screening
         ]);
     }
     
@@ -97,24 +132,23 @@ class ScreeningController extends Controller
         return $selectedAgeGroup;
     }
 
-    public function submitMilestone(Request $request) {
-        $screeningId = $request->input('screening_id');
-
-        // Ensure screeningId exists and is valid
-        if (!$screeningId || !Screening::find($screeningId)) {
-            return redirect()->back()->withErrors(['error' => 'Invalid screening ID']);
+    public function submitMilestone(Request $request)
+    {
+        // Add this at the beginning of the method
+        if (Session::has('questionnaire_completed')) {
+            return redirect()->route('form');
         }
 
-        $milestones = $request->input('milestones'); // Array of milestone_id => response
-        
-        // Check responses for critical and non-critical milestones
+        $screeningId = $request->input('screening_id');
+        $screening = Screening::findOrFail($screeningId);
+        $milestones = $request->input('milestones');
+
         $criticalFailed = 0;
         $nonCriticalFailed = 0;
         
         foreach ($milestones as $milestoneId => $response) {
             $milestone = Milestone::find($milestoneId);
-            
-            if ($response == 0) { // 'Not Yet' response
+            if ($response == 0) {
                 if ($milestone->isCritical) {
                     $criticalFailed++;
                 } else {
@@ -122,41 +156,113 @@ class ScreeningController extends Controller
                 }
             }
         }
-        
-        // Save the current responses in a new row in ScreeningMilestoneProgress
+
+        $hasDelay = ($criticalFailed >= 1 || $nonCriticalFailed >= 2);
+        $currentAgeGroup = Milestone::where('id', array_keys($milestones)[0])->value('age_group');
+
+        // Save the current responses with delay status
         ScreeningMilestoneProgress::create([
             'screening_id' => $screeningId,
             'responses' => json_encode($milestones),
+            'has_delay' => $hasDelay
         ]);
-        
-        // Check if we need to go back to a previous checklist
-        if ($criticalFailed >= 1 || $nonCriticalFailed >= 2) {
-            // Determine the previous age group to use
-            $currentAgeGroup = Milestone::where('id', array_keys($milestones)[0])->value('age_group');
+
+        if ($hasDelay) {
             $previousAgeGroup = $this->getPreviousAgeGroup($currentAgeGroup);
-    
-            if ($previousAgeGroup) {
-                // Redirect to the previous checklist
-                return redirect()->route('questionnaire.show', ['childId' => $screeningId, 'ageGroup' => $previousAgeGroup])
-                                 ->with('status', 'Please try the previous checklist.');
+            
+            // If we're at 1 month checklist or no previous age group available
+            if ($currentAgeGroup == 1 || !$previousAgeGroup) {
+                session(['last_failed_age_group_' . $screeningId => $currentAgeGroup]);
+                session(['has_delay_' . $screeningId => true]);
+                session(['original_age_' . $screeningId => $screening->child_age_in_months]);
+                session(['final_developmental_age_' . $screeningId => 0]); // Set to 0 to indicate less than 1 month
+                
+                Session::put('questionnaire_completed', true);
+                session(['completed_screening_' . $screeningId => true]);
+                
+                return redirect()->route('screening.result', ['screeningId' => $screeningId]);
             }
+
+            // Continue to previous age group if available
+            session(['last_failed_age_group_' . $screeningId => $currentAgeGroup]);
+            session(['has_delay_' . $screeningId => true]);
+            session(['original_age_' . $screeningId => $screening->child_age_in_months]);
+            
+            return redirect()->route('questionnaire.show', [
+                'childId' => $screeningId,
+                'ageGroup' => $previousAgeGroup
+            ])->with('status', 'Please complete the previous age group checklist.');
         }
+
+        // Update developmental age and completion status
+        $developmentalAge = session('last_failed_age_group_' . $screeningId) ? $currentAgeGroup : $screening->child_age_in_months;
+        $screening->update(['child_age_in_months' => $developmentalAge]);
         
-        // Redirect to the results page with a "Developing as Expected" message if no previous checklist was needed
-        return redirect()->route('thank.you')->with('status', 'The child is developing as expected.');
+        Session::put('questionnaire_completed', true);
+        session(['completed_screening_' . $screeningId => true]);
+        session(['has_delay_' . $screeningId => $hasDelay]);
+        session(['final_developmental_age_' . $screeningId => $developmentalAge]);
+
+        Session::forget('screening_in_progress');
+        Session::put('questionnaire_completed', true);
+        
+        return redirect()->route('screening.result', ['screeningId' => $screeningId]);
     }
     
     // Helper function to determine the previous age group
     private function getPreviousAgeGroup($currentAgeGroup) {
-        $milestoneAgeGroups = [72, 60, 48, 36, 24, 18, 12, 9, 6, 3, 1]; // Age groups in months in descending order
+        $milestoneAgeGroups = [72, 60, 48, 36, 24, 18, 12, 9, 6, 3, 1];
     
         foreach ($milestoneAgeGroups as $index => $ageGroup) {
             if ($ageGroup == $currentAgeGroup && isset($milestoneAgeGroups[$index + 1])) {
-                return $milestoneAgeGroups[$index + 1]; // Return the previous age group
+                return $milestoneAgeGroups[$index + 1];
             }
         }
     
-        return null; // No previous age group (already at the lowest age group)
+        return null;
     }
-    
+
+    public function showResult($screeningId)
+    {
+        $screening = Screening::with('milestoneProgress')->findOrFail($screeningId);
+        
+        // If they had to do a previous age group test, they have a delay
+        $hasDelay = session('last_failed_age_group_' . $screeningId) !== null;
+        
+        $developmentalAge = session('final_developmental_age_' . $screeningId, $screening->child_age_in_months);
+        $originalAge = session('original_age_' . $screeningId, $screening->child_age_in_months);
+        
+        $healthcareCenter = $hasDelay ? (object)[
+            'name' => 'Klinik Kesihatan Putrajaya Presint 9',
+            'address' => 'Jalan P9E, Presint 9',
+            'postal_code' => '62250',
+            'city' => 'Putrajaya',
+            'state' => 'W.P. Putrajaya',
+            'latitude' => 2.9235,
+            'longitude' => 101.6965
+        ] : null;
+
+        return Response::view('result', [
+            'screening' => $screening,
+            'hasDelay' => $hasDelay,
+            'healthcareCenter' => $healthcareCenter,
+            'developmentalAge' => $developmentalAge,
+            'originalAge' => $originalAge
+        ])
+        ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        ->header('Pragma', 'no-cache')
+        ->header('Expires', '0');
+    }
+
+    private function getNearestHealthcareCenter()
+    {
+        // For now, return a dummy healthcare center
+        return (object)[
+            'name' => 'Klinik Kesihatan Putrajaya Presint 9',
+            'address' => 'Jalan P9E, Presint 9',
+            'postal_code' => '62250',
+            'city' => 'Putrajaya',
+            'state' => 'W.P. Putrajaya'
+        ];
+    }
 }

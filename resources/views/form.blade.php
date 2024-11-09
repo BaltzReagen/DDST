@@ -3,12 +3,26 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
         <title>Form</title>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     </head>
 
     <body>
+        @php
+            // Clear all screening related sessions
+            Session::forget('questionnaire_completed');
+            Session::forget('screening_in_progress');
+            foreach (Session::all() as $key => $value) {
+                if (Str::startsWith($key, ['completed_screening_', 'last_failed_age_group_', 'has_delay_', 'original_age_', 'final_developmental_age_'])) {
+                    Session::forget($key);
+                }
+            }
+        @endphp
+
         <div class="page-container">
             <div class="back-button">
                 <button class="back-btn" onclick="window.location='{{ url('/') }}'">
@@ -71,8 +85,45 @@
         </div>
 
         <script>
+            // Clear browser history state
+            if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+                window.location.replace(window.location.href);
+            }
+
+            // Prevent back navigation
+            window.onpageshow = function(event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            };
+
+            // Clear any stored form data
+            window.onload = function() {
+                sessionStorage.clear();
+                localStorage.removeItem('questionnaire_progress');
+                
+                // Replace the current history entry
+                window.history.replaceState(null, '', window.location.href);
+            };
+
             document.getElementById('login-btn').addEventListener('click', () => window.location = '{{ url('login') }}');
             document.getElementById('register-btn').addEventListener('click', () => window.location = '{{ url('register') }}');
+
+            // Prevent form resubmission
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+            
+            // Clear any stored questionnaire data
+            window.onload = function() {
+                sessionStorage.clear();
+                localStorage.removeItem('questionnaire_progress');
+            }
         </script>
+
+        @php
+            // Clear the questionnaire completion session when reaching the form
+            Session::forget('questionnaire_completed');
+        @endphp
     </body>
 </html>

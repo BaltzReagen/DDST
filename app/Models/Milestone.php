@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
 class Milestone extends Model
@@ -21,4 +22,9 @@ class Milestone extends Model
         'key',
         'image',
     ];
+
+    public function progress(): HasMany
+    {
+        return $this->hasMany(ScreeningMilestoneProgress::class);
+    }
 }

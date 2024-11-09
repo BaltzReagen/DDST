@@ -203,7 +203,7 @@ class MilestoneSeeder extends Seeder
             [
                 'id' => 19,
                 'age_group' => 3,
-                'domain' => 'pertutura_dan_bahasa',
+                'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Menangis atau merengek apabila tidak selesa, sakit atau lapar dan sebagainya.',
                 'youtube_title' => 'unavailable',
@@ -285,7 +285,7 @@ class MilestoneSeeder extends Seeder
             [
                 'id' => 27,
                 'age_group' => 6,
-                'domain' => 'pentuturan_dan_bahasa',
+                'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Menyebut suku kata berulang kali (contoh: pa..pa..pa, ma..ma..ma).',
                 'youtube_title' => 'unavailable',

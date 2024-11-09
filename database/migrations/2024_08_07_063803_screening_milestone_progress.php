@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('screening_id');
             $table->json('responses'); // JSON column to store all milestone responses
+            $table->boolean('has_delay')->default(false);
             $table->timestamps();
         
             $table->foreign('screening_id')->references('id')->on('screenings')->onDelete('cascade');

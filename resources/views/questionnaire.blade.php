@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0"
     <title>{{ $child_age_in_months }} Month Milestone Checklist</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
     <div class="back-button">
         <button class="back-btn" id="returnButton"><span>←</span> Kembali</button>
     </div>
@@ -36,7 +39,7 @@
         <!-- Form to submit answers -->
         <form id="milestone-form" method="POST" action="{{ route('submit.milestone') }}">
             @csrf
-            <input type="hidden" name="screening_id" value="{{ $screeningId }}">
+            <input type="hidden" name="screening_id" value="{{ $childId }}">
             @foreach($milestoneQuestions as $question)
             <div class="milestone-question" data-domain="{{ $question->domain }}">
                 <div class="question-text">
@@ -57,14 +60,17 @@
             </div>
             @endforeach
 
-            <!-- Submit button at the end -->
-            <button type="submit" class="submit-button">Submit</button>
-            <div id="overlay" style="display: none;"></div>
-            <div id="popup-modal" style="display: none;">
-                <p>Since the child failed to achieve all the milestones expected of their age, they now need to complete the previous age checklist to assess their current developmental age.</p>
-                <button type="button" id="understood-btn">Understood</button>
-            </div>
+            <button type="submit" class="submit-button" disabled>Submit</button>
         </form>
+    </div>
+
+    <!-- Single Modal Implementation -->
+    <div id="overlay" class="overlay"></div>
+    <div id="popup-modal" class="modal">
+        <div class="modal-content">
+            <p>Since the child failed to achieve all the milestones expected of their age, they now need to complete the previous age checklist to assess their current developmental age.</p>
+            <button type="button" id="understood-btn" class="understood-button">Understood</button>
+        </div>
     </div>
 
     <footer class="dashboard-footer">
@@ -72,47 +78,179 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Check if user abandoned a previous questionnaire
-            if (sessionStorage.getItem('questionnaire_abandoned') === 'true' && 
-                document.referrer.includes('questionnaire')) {
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('questionnaire_completed')) {
                 window.location.replace('{{ url("form") }}');
+                return;
             }
 
-            const yesButtons = document.querySelectorAll('.yes-button');
-            const notYetButtons = document.querySelectorAll('.not-yet-button');
-            const form = document.getElementById('milestone-form');
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const questions = document.querySelectorAll('.milestone-question');
-            const returnButton = document.getElementById('returnButton');
-            const modal = document.getElementById("popup-modal");
-            const understoodButton = document.getElementById("understood-btn");
-            const submitButton = document.querySelector('.submit-button');
-            const overlay = document.getElementById("overlay");
-            
-            // Display the modal
-            function showModal() {
-                overlay.style.display = "block";
-                modal.style.display = "block";
-            }       
-
-            // Handle "Understood" button click to proceed
-            understoodButton.addEventListener("click", function() {
-                overlay.style.display = "block";
-                modal.style.display = "none";
-                form.submit(); // Submit the form after understanding
+            // Prevent back button
+            window.history.pushState(null, null, window.location.href);
+            window.addEventListener('popstate', function(event) {
+                window.history.pushState(null, null, window.location.href);
+                window.location.replace('{{ url("form") }}');
             });
 
-            // Check milestone criteria before form submission
-            function checkMilestoneBeforeSubmit() {
+            // Cache DOM elements
+            const form = document.getElementById('milestone-form');
+            const submitButton = document.querySelector('.submit-button');
+            const returnButton = document.getElementById('returnButton');
+            const modal = document.getElementById('popup-modal');
+            const overlay = document.getElementById('overlay');
+            const understoodButton = document.getElementById('understood-btn');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const questions = document.querySelectorAll('.milestone-question');
+            const yesButtons = document.querySelectorAll('.yes-button');
+            const notYetButtons = document.querySelectorAll('.not-yet-button');
+
+            // Prevent page navigation
+            preventPageNavigation();
+
+            // Check for abandoned questionnaire
+            checkAbandonedQuestionnaire();
+
+            // Initialize event listeners
+            initializeEventListeners();
+
+            // Initialize first tab
+            if (tabButtons.length > 0) {
+                tabButtons[0].click();
+            }
+
+            // Helper Functions
+            function preventPageNavigation() {
+                window.history.pushState(null, null, window.location.href);
+                window.onpopstate = function() {
+                    window.history.pushState(null, null, window.location.href);
+                };
+
+                window.onbeforeunload = function() {
+                    return "Are you sure you want to leave? Your progress will be lost.";
+                };
+            }
+
+            function checkAbandonedQuestionnaire() {
+                if (sessionStorage.getItem('questionnaire_abandoned') === 'true' && 
+                    document.referrer.includes('questionnaire')) {
+                    window.location.replace('{{ url("form") }}');
+                }
+            }
+
+            function initializeEventListeners() {
+                // Return button handler
+                returnButton.addEventListener('click', handleReturn);
+
+                // Tab button handlers
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', handleTabClick);
+                });
+
+                // Response button handlers
+                yesButtons.forEach(button => {
+                    button.addEventListener('click', () => handleResponse(button, true));
+                });
+
+                notYetButtons.forEach(button => {
+                    button.addEventListener('click', () => handleResponse(button, false));
+                });
+
+                // Form submission handler
+                form.addEventListener('submit', handleFormSubmit);
+
+                // Modal handler
+                understoodButton.addEventListener('click', handleUnderstood);
+            }
+
+            function handleReturn(e) {
+                e.preventDefault();
+                if (confirm("Are you sure you want to return? Your progress will not be saved.")) {
+                    sessionStorage.setItem('questionnaire_abandoned', 'true');
+                    window.location.replace('{{ url("form") }}');
+                }
+            }
+
+            function handleTabClick() {
+                const domain = this.getAttribute('data-domain');
+                questions.forEach(question => {
+                    question.style.display = question.getAttribute('data-domain') === domain ? 'block' : 'none';
+                });
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add(this.classList.contains('completed') ? 'completed active' : 'active');
+            }
+
+            function handleResponse(button, isYes) {
+                const milestoneId = button.getAttribute('data-milestone-id');
+                const input = document.getElementById('milestone-' + milestoneId);
+                const otherButton = isYes ? button.nextElementSibling : button.previousElementSibling;
+
+                if (button.classList.contains('active')) {
+                    input.value = "";
+                    button.classList.remove('active');
+                } else {
+                    input.value = isYes ? "1" : "0";
+                    button.classList.add('active');
+                    otherButton.classList.remove('active');
+                }
+                updateTabStatus();
+                updateSubmitButtonState();
+            }
+
+            function updateTabStatus() {
+                tabButtons.forEach(button => {
+                    const domain = button.getAttribute('data-domain');
+                    const domainQuestions = document.querySelectorAll(`.milestone-question[data-domain="${domain}"]`);
+                    const allAnswered = Array.from(domainQuestions).every(question => {
+                        return question.querySelector('input[type="hidden"]').value !== "";
+                    });
+                    button.classList.toggle('completed', allAnswered);
+                });
+            }
+
+            function updateSubmitButtonState() {
+                const allAnswered = Array.from(document.querySelectorAll('input[name^="milestones"]'))
+                    .every(input => input.value !== "");
+                submitButton.disabled = !allAnswered;
+                submitButton.style.opacity = allAnswered ? '1' : '0.5';
+                submitButton.style.backgroundColor = allAnswered ? '#2196F3' : '#ccc';
+                submitButton.style.cursor = allAnswered ? 'pointer' : 'not-allowed';
+            }
+
+            function handleFormSubmit(e) {
+                e.preventDefault();
+                if (!validateForm()) {
+                    return;
+                }
+                if (checkMilestonesCriteria()) {
+                    submitButton.disabled = true;
+                    window.onbeforeunload = null;
+                    this.submit();
+                }
+            }
+
+            function validateForm() {
+                const unansweredQuestions = Array.from(document.querySelectorAll('input[name^="milestones"]'))
+                    .filter(input => input.value === "");
+                
+                if (unansweredQuestions.length > 0) {
+                    alert('Please answer all questions before submitting.');
+                    const firstUnanswered = unansweredQuestions[0].closest('.milestone-question');
+                    const domain = firstUnanswered.getAttribute('data-domain');
+                    document.querySelector(`.tab-button[data-domain="${domain}"]`)?.click();
+                    firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return false;
+                }
+                return true;
+            }
+
+            function checkMilestonesCriteria() {
                 let isCriticalFailed = false;
                 let nonCriticalFailures = 0;
 
-                document.querySelectorAll('.milestone-question').forEach(question => {
+                questions.forEach(question => {
                     const input = question.querySelector('input[type="hidden"]');
                     const isCritical = question.querySelector('.question-text').innerText.includes('*');
                     
-                    if (input.value === "0") { // "Not Yet" response
+                    if (input.value === "0") {
                         if (isCritical) {
                             isCriticalFailed = true;
                         } else {
@@ -123,140 +261,45 @@
 
                 if (isCriticalFailed || nonCriticalFailures >= 2) {
                     showModal();
-                    return false; // Prevent form from submitting immediately
+                    return false;
                 }
                 return true;
             }
 
-            // Separate the tab functionality from form submission
-            submitButton?.addEventListener("click", function(event) {
-                event.preventDefault(); // Prevent immediate submission
-
-                if (checkMilestoneBeforeSubmit()) {
-                    form.submit(); // Submit only if criteria are met
-                }
-            });
-            
-            // Confirmation popup for Return button
-            returnButton.addEventListener('click', function (e) {
-                e.preventDefault();
-                const confirmReturn = confirm("Are you sure you want to return? Your progress will not be saved.");
-                if (confirmReturn) {
-                    // Clear browser history and redirect
-                    window.location.replace('{{ url("form") }}');
-                    
-                    // Additional security: Add entry to session storage
-                    sessionStorage.setItem('questionnaire_abandoned', 'true');
-                }
-            });
-
-            // Tab switching functionality
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const domain = this.getAttribute('data-domain');
-
-                    // Hide all questions and show only those matching the selected domain
-                    questions.forEach(question => {
-                        question.style.display = question.getAttribute('data-domain') === domain ? 'block' : 'none';
-                    });
-
-                    // Remove 'active' class from all tab buttons
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-
-                    // Check if the current tab is completed and add appropriate classes
-                    if (this.classList.contains('completed')) {
-                        this.classList.add('completed', 'active');
-                    } else {
-                        this.classList.add('active');
-                    }
-                });
-            });
-
-            // Initialize first tab as active and display relevant questions
-            if (tabButtons.length > 0) {
-                tabButtons[0].click();
+            function showModal() {
+                const overlay = document.getElementById('overlay');
+                const modal = document.getElementById('popup-modal');
+                
+                // Prevent body scrolling when modal is open
+                document.body.style.overflow = 'hidden';
+                
+                // Show overlay and modal with fade effect
+                overlay.style.display = 'block';
+                modal.style.display = 'block';
+                
+                // Optional: Add fade-in effect
+                setTimeout(() => {
+                    overlay.style.opacity = '1';
+                    modal.style.opacity = '1';
+                }, 10);
             }
 
-            // Handle Yes/No button clicks with toggle functionality
-            yesButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const milestoneId = this.getAttribute('data-milestone-id');
-                    const input = document.getElementById('milestone-' + milestoneId);
-
-                    if (this.classList.contains('active')) {
-                        // If already active, deselect it
-                        input.value = "";
-                        this.classList.remove('active');
-                    } else {
-                        // If not active, select it and deselect the other button
-                        input.value = 1; // 1 for Yes
-                        this.classList.add('active');
-                        this.nextElementSibling.classList.remove('active');
-                    }
-                    updateTabStatus();
-                });
-            });
-
-            notYetButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const milestoneId = this.getAttribute('data-milestone-id');
-                    const input = document.getElementById('milestone-' + milestoneId);
-
-                    if (this.classList.contains('active')) {
-                        // If already active, deselect it
-                        input.value = "";
-                        this.classList.remove('active');
-                    } else {
-                        // If not active, select it and deselect the other button
-                        input.value = 0; // 0 for Not Yet
-                        this.classList.add('active');
-                        this.previousElementSibling.classList.remove('active');
-                    }
-                    updateTabStatus();
-                });
-            });
-
-            // Update tab colors based on completion status of questions
-            function updateTabStatus() {
-                tabButtons.forEach(button => {
-                    const domain = button.getAttribute('data-domain');
-                    const domainQuestions = document.querySelectorAll(`.milestone-question[data-domain="${domain}"]`);
-                    let allAnswered = true;
-
-                    domainQuestions.forEach(question => {
-                        const input = question.querySelector('input[type="hidden"]');
-                        if (input.value === "") {
-                            allAnswered = false;
-                        }
-                    });
-
-                    // Update tab color: green if completed, remove completed if not
-                    if (allAnswered) {
-                        button.classList.add('completed');
-                    } else {
-                        button.classList.remove('completed');
-                    }
-                });
+            function handleUnderstood() {
+                const overlay = document.getElementById('overlay');
+                const modal = document.getElementById('popup-modal');
+                
+                // Restore body scrolling
+                document.body.style.overflow = 'auto';
+                
+                // Hide overlay and modal
+                overlay.style.display = 'none';
+                modal.style.display = 'none';
+                
+                // Submit the form
+                window.onbeforeunload = null;
+                form.submit();
             }
-
-            // Validation to ensure all questions are answered before submitting
-            form.addEventListener('submit', function (e) {
-                const inputs = document.querySelectorAll('input[type="hidden"]');
-                let allAnswered = true;
-
-                inputs.forEach(input => {
-                    if (input.value === "") {
-                        allAnswered = false;
-                    }
-                });
-
-                if (!allAnswered) {
-                    alert('Please answer all questions before submitting.');
-                    e.preventDefault();
-                }
-            });
         });
     </script>
-
 </body>
 </html>

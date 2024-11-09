@@ -64,11 +64,13 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'prevent-back' => \App\Http\Middleware\PreventBackHistory::class,
     ];
 
     protected $routeMiddleware = [
         // ...
         'no.cache' => \App\Http\Middleware\NoCache::class,
+        'prevent-questionnaire-back' => \App\Http\Middleware\PreventQuestionnaireBackHistory::class,
     ];
     
 }
