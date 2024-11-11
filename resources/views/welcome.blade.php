@@ -8,6 +8,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     </head>
     <body>
+        @include('components.logo-header')
         <div class="hero-section">
             <h1 class="hero-title">Alat Saringan Perkembangan Kanak-kanak</h1>
             

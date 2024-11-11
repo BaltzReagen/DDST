@@ -12,6 +12,7 @@
     </head>
 
     <body>
+        @include('components.logo-header')
         @php
             // Clear all screening related sessions
             Session::forget('questionnaire_completed');
@@ -85,6 +86,14 @@
         </div>
 
         <script>
+            window.onpageshow = function(event) {
+                if (event.persisted || sessionStorage.getItem('questionnaire_abandoned') === 'true') {
+                    sessionStorage.clear();
+                    localStorage.removeItem('questionnaire_progress');
+                    window.location.reload();
+                }
+            };
+            
             // Clear browser history state
             if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
                 window.location.replace(window.location.href);

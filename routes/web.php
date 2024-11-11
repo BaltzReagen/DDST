@@ -8,6 +8,7 @@ use App\Http\Controllers\ScreeningController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Laravel\Socialite\Facades\Socialite;
 
 
 /*
@@ -193,5 +194,17 @@ Route::get('/print-result/{screeningId}', function($screeningId) {
         \Log::error($e->getTraceAsString());
         abort(500, 'Error generating PDF');
     }
-})->name('print.result'); // Add the route name here
+})->name('print.result');
+
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('google.login');
+
+Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'callback'])->name('google.callback');
+
+
+Route::get('/privacy-policy', [App\Http\Controllers\PageController::class, 'privacyPolicy'])->name('privacy.policy');
+Route::get('/terms-of-service', [App\Http\Controllers\PageController::class, 'termsOfService'])->name('terms.service');
+
+Route::get('/terms', [App\Http\Controllers\PageController::class, 'termsOfService'])->name('terms');
 

@@ -223,9 +223,71 @@
                 33% { content: '..'; }
                 66% { content: '...'; }
             }
+
+            /* Regular header logo */
+            .main-header .site-logo {
+                height: 250px;
+                width: auto;
+            }
+
+            .result-page .logo-container {
+                display: flex;
+                justify-content: center;
+                padding: 0.5rem 0;
+            }
+
+            .result-page .site-logo {
+                height: 250px;
+                width: auto;
+                margin-bottom: 0.5rem;
+            }
+
+            @media (max-width: 768px) {
+                .result-page .site-logo {
+                    height: 25px;
+                }
+            }
+
+            /* Result page specific styles */
+            .result-page {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                background-color: #f8f9fa;
+            }
+
+            .container.py-5 {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .result-page .logo-container {
+                display: flex;
+                justify-content: center;
+                padding: 0.5rem 0;
+                margin-bottom: -1rem;
+            }
+
+            footer {
+                width: 100%;
+                background-color: white;
+                text-align: center;
+                padding: 20px 0;
+                color: #6b7280;
+                box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+                margin-top: auto;
+            }
         </style>
     </head>
-    <body>
+
+    <body class="result-page">
+        <div class="logo-container">
+            <a href="{{ url('/') }}" class="logo-wrapper">
+                <img src="{{ asset('images/logo.png') }}" alt="DDST Logo" class="site-logo">
+            </a>
+        </div>
+
         <div class="container py-5">
             <div class="result-header text-center">
                 <h1 class="display-5 fw-bold mb-0">Keputusan Penilaian</h1>
@@ -355,11 +417,9 @@
                     @endif
                 </div>
             </div>
-
-            <footer class="text-center mt-5">
-                <small class="text-muted">© Copyright 2023 NARC - All Rights Reserved</small>
-            </footer>
         </div>
+
+
 
         @if($hasDelay)
             <script>
@@ -596,5 +656,9 @@
             sessionStorage.clear();
             localStorage.removeItem('questionnaire_progress');
         </script>
+
+        <footer>
+            <small>&copy; {{ date('Y') }} NARC - All Rights Reserved</small>
+        </footer>
     </body>
 </html>

@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    @include('components.logo-header')
     <div class="back-button">
         <button class="back-btn" id="returnButton"><span>←</span> Kembali</button>
     </div>
@@ -79,6 +80,23 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const logoLink = document.getElementById('logo-link');
+            if (logoLink) {
+                logoLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (confirm('Adakah anda pasti mahu keluar? Semua jawapan akan hilang.')) {
+                        // Clear any stored questionnaire data
+                        sessionStorage.removeItem('questionnaire_completed');
+                        sessionStorage.setItem('questionnaire_abandoned', 'true');
+                        
+                        // Clear session storage and redirect
+                        window.onbeforeunload = null;
+                        window.location.replace('{{ url("form") }}');
+                    }
+                });
+            }
+            
             if (sessionStorage.getItem('questionnaire_completed')) {
                 window.location.replace('{{ url("form") }}');
                 return;

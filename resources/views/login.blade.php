@@ -12,6 +12,7 @@
     </head>
 
     <body class="login">
+        @include('components.logo-header')
         <div class="back-button">
             <button class="back-btn" onclick="window.location='{{ url('form') }}'"><span>←</span> Kembali</button>
         </div>
@@ -41,8 +42,21 @@
                     <button type="submit" class="login-page-btn">LOG MASUK</button>
                 </form>
                 <div class="login-options">
-                    <a href="#">Lupa Log Masuk?</a>
-                    <a href="{{url('register')}}">Daftar</a>
+                    <div class="login-divider-container">
+                        <div class="login-divider"></div>
+                        <span class="login-divider-text">atau</span>
+                        <div class="login-divider"></div>
+                    </div>
+                </div>
+
+                <a href="{{ route('google.login') }}" class="btn-google">
+                    <img src="{{ asset('images/google-logo.png') }}" alt="Google logo">
+                    <span>Login dengan Google</span>
+                </a>
+
+                <div class="auth-links">
+                    <a href="{{ route('password.request') }}" class="auth-link">Lupa Masuk?</a>
+                    <a href="{{ route('register') }}" class="auth-link">Daftar</a>
                 </div>
             </div>
         </div>
