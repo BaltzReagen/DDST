@@ -2,45 +2,39 @@
 
 namespace App\Listeners;
 
-use Illuminate\Auth\Events\Registered;
-use App\Models\Screening;
 use App\Models\ScreeningHistory;
+use App\Models\ScreeningMilestoneProgress;
+use Illuminate\Auth\Events\Registered;
 
 class MoveScreeningToHistory
 {
     public function handle(Registered $event)
     {
         $user = $event->user;
+        
+        // Find any guest screenings associated with this user
+        $guestScreenings = ScreeningMilestoneProgress::whereHas('screening', function($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
 
-        if ($user->isGuest) {
-            $screenings = Screening::where('user_id', $user->id)->get();
+        foreach ($guestScreenings as $progress) {
+            $screening = $progress->screening;
+            
+            // Create screening history entry
+            ScreeningHistory::create([
+                'user_id' => $user->id,
+                'fname' => $screening->fname,
+                'child_name' => $screening->child_name,
+                'child_dob' => $screening->child_dob,
+                'child_age_in_months' => $screening->child_age_in_months,
+                'child_gender' => $screening->child_gender,
+                'milestone_responses' => json_decode($progress->responses, true),
+                'has_delay' => $progress->has_delay,
+                'developmental_age' => $screening->child_age_in_months
+            ]);
 
-            foreach ($screenings as $screening) {
-                ScreeningHistory::create([
-                    'user_id' => $user->id,
-                    'fname' => $screening->fname,
-                    'child_name' => $screening->child_name,
-                    'child_dob' => $screening->child_dob,
-                    'child_age_in_months' => $screening->child_age_in_months,
-                    'child_gender' => $screening->child_gender,
-                    'responses' => $screening->milestoneProgress->responses,
-                    'screening_date' => $screening->created_at->toDateString(),
-                    'screening_result' => $this->determineResult($screening->milestoneProgress->responses),
-                ]);
-
-                $screening->delete();
-            }
-
-            // Update the user status
-            $user->isGuest = false;
-            $user->save();
+            // Delete the old progress record
+            $progress->delete();
         }
     }
-
-    private function determineResult($responses)
-    {
-        // Custom logic to determine screening result based on responses
-        return 'pass'; // or other result based on your conditions
-    }
 }
-

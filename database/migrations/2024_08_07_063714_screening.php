@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('child_name');
             $table->date('child_dob');
             $table->integer('child_age_in_months');
-            $table->char('child_gender', 1); // Assuming 'M' or 'F' for gender
+            $table->char('child_gender', 1);
+            $table->integer('checklist_age')->nullable();
+            $table->boolean('has_delay')->default(false);
             $table->timestamps();
 
             // Foreign key relationship with 'users' table

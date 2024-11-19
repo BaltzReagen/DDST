@@ -33,10 +33,16 @@
 
             <div class="form-container">
                 <div class="form-header">
-                    <h1>Ambil Ujian sebagai Tetamu</h1>
-                    <p class="form-description">Sebagai tetamu anda akan mendapat keputusan segera, namun anda akan menerima laporan ujian yang terhad. 
-                        Untuk laporan ujian penuh <a href="{{ route('register') }}">daftar di sini</a>.
-                    </p>
+                    <h1>Alat Saringan Perkembangan Kanak-kanak</h1>
+                    @auth
+                        <p>Sila lengkapkan borang di bawah untuk memulakan saringan perkembangan kanak-kanak.</p>
+                    @else
+                        <h1>Ambil Ujian sebagai Tetamu</h1>
+                        <p class="form-description">Sebagai tetamu anda akan mendapat keputusan segera, namun anda akan menerima laporan ujian yang terhad. 
+                            Untuk laporan ujian penuh <a href="{{ route('register') }}">daftar di sini</a>.
+                        </p>
+                    @endauth
+                    
                     <p class="required-note">* Ruangan wajib diisi</p>
                 </div>
 
@@ -44,8 +50,13 @@
                     @csrf
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="first-name">Nama Pertama <span class="required">*</span></label>
-                            <input type="text" name="fname" id="first-name" placeholder="Masukkan Nama Pertama" required>
+                            <label for="first-name">Nama Ibu/Bapa <span class="required">*</span></label>
+                            <input type="text" 
+                                id="fname" 
+                                name="fname" 
+                                value="{{ Auth::check() ? App\Helpers\StringHelper::formatFullName(Auth::user()->username) : old('fname') }}" 
+                                class="form-control" 
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="child-name">Nama Anak <span class="required">*</span></label>
@@ -68,16 +79,18 @@
                     <button class="primary-btn" type="submit">Ambil Ujian</button>
                 </form>
 
-                <div class="account-options">
-                    <div class="divider">
-                        <span>ATAU</span>
+                @guest
+                    <div class="account-options">
+                        <div class="divider">
+                            <span>ATAU</span>
+                        </div>
+                        
+                        <div class="auth-buttons">
+                            <button class="secondary-btn" id="register-btn">Daftar untuk Akses Penuh</button>
+                            <p class="login-text">Sudah mempunyai akaun? <button class="text-btn" id="login-btn">Log masuk</button></p>
+                        </div>
                     </div>
-                    
-                    <div class="auth-buttons">
-                        <button class="secondary-btn" id="register-btn">Daftar untuk Akses Penuh</button>
-                        <p class="login-text">Sudah mempunyai akaun? <button class="text-btn" id="login-btn">Log masuk</button></p>
-                    </div>
-                </div>
+                @endguest
             </div>
 
             <footer class="login-footer">

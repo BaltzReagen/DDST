@@ -6,6 +6,7 @@ use App\Models\Screening;
 use App\Models\Milestone;
 use App\Models\User;
 use App\Models\ScreeningMilestoneProgress;
+use App\Models\ScreeningHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -66,12 +67,12 @@ class ScreeningController extends Controller
 
         // Save the data to the screenings table
         $screening = Screening::create([
-            'user_id' => $userId, // Either guest or authenticated user ID
-            'fname' => $request->input('fname'),
+            'user_id' => $userId,
+            'fname' => $request->input('fname'),  // Add this line
             'child_name' => $request->input('child_name'),
             'child_dob' => $request->input('dob'),
-            'child_age_in_months' => $ageInMonths, // Save calculated age in months
-            'child_gender' => $request->input('gender'),
+            'child_age_in_months' => $ageInMonths,
+            'child_gender' => $request->input('gender')
         ]);
 
         // Redirect to the questionnaire page with the screening's child ID
@@ -134,21 +135,35 @@ class ScreeningController extends Controller
 
     public function submitMilestone(Request $request)
     {
-        // Add this at the beginning of the method
         if (Session::has('questionnaire_completed')) {
             return redirect()->route('form');
         }
 
         $screeningId = $request->input('screening_id');
         $screening = Screening::findOrFail($screeningId);
-        $milestones = $request->input('milestones');
+        $submittedMilestones = $request->input('milestones', []);
+        
+        \Log::info('Starting milestone submission:', [
+            'screening_id' => $screeningId,
+            'user_id' => Auth::id(),
+            'is_guest' => Auth::guest()
+        ]);
 
+        // Calculate results
+        $currentAgeGroup = Milestone::where('id', array_keys($submittedMilestones)[0])->value('age_group');
+        $allMilestones = Milestone::where('age_group', $currentAgeGroup)->get();
+        
         $criticalFailed = 0;
         $nonCriticalFailed = 0;
-        
-        foreach ($milestones as $milestoneId => $response) {
-            $milestone = Milestone::find($milestoneId);
-            if ($response == 0) {
+        $milestoneResponses = [];
+
+        foreach ($allMilestones as $milestone) {
+            $response = isset($submittedMilestones[$milestone->id]) ? 
+                (int)$submittedMilestones[$milestone->id] : 0;
+            
+            $milestoneResponses[$milestone->id] = $response;
+
+            if ($response == 0) {  // If milestone not achieved
                 if ($milestone->isCritical) {
                     $criticalFailed++;
                 } else {
@@ -157,56 +172,113 @@ class ScreeningController extends Controller
             }
         }
 
-        $hasDelay = ($criticalFailed >= 1 || $nonCriticalFailed >= 2);
-        $currentAgeGroup = Milestone::where('id', array_keys($milestones)[0])->value('age_group');
+        // Determine if there's a delay
+        $hasDelay = ($criticalFailed > 0 || $nonCriticalFailed >= 2);
 
-        // Save the current responses with delay status
-        ScreeningMilestoneProgress::create([
-            'screening_id' => $screeningId,
-            'responses' => json_encode($milestones),
-            'has_delay' => $hasDelay
-        ]);
-
+        // If there's a delay, check if there's a previous age group to test
         if ($hasDelay) {
             $previousAgeGroup = $this->getPreviousAgeGroup($currentAgeGroup);
             
-            // If we're at 1 month checklist or no previous age group available
-            if ($currentAgeGroup == 1 || !$previousAgeGroup) {
-                session(['last_failed_age_group_' . $screeningId => $currentAgeGroup]);
-                session(['has_delay_' . $screeningId => true]);
-                session(['original_age_' . $screeningId => $screening->child_age_in_months]);
-                session(['final_developmental_age_' . $screeningId => 0]); // Set to 0 to indicate less than 1 month
-                
-                Session::put('questionnaire_completed', true);
-                session(['completed_screening_' . $screeningId => true]);
-                
-                return redirect()->route('screening.result', ['screeningId' => $screeningId]);
-            }
+            if ($previousAgeGroup) {
+                // Store progress differently based on user type
+                if (Auth::check() && !Auth::user()->isGuest) {
+                    // For logged-in users, store in ScreeningHistory
+                    $screeningHistory = ScreeningHistory::create([
+                        'user_id' => Auth::id(),
+                        'screening_id' => $screeningId,
+                        'fname' => $screening->fname,
+                        'child_name' => $screening->child_name,
+                        'child_dob' => $screening->child_dob,
+                        'child_age_in_months' => $screening->child_age_in_months,
+                        'child_gender' => $screening->child_gender,
+                        'milestone_responses' => json_encode($milestoneResponses),
+                        'checklist_age' => $currentAgeGroup,
+                        'has_delay' => $hasDelay,
+                        'developmental_age' => $currentAgeGroup
+                    ]);
 
-            // Continue to previous age group if available
-            session(['last_failed_age_group_' . $screeningId => $currentAgeGroup]);
-            session(['has_delay_' . $screeningId => true]);
-            session(['original_age_' . $screeningId => $screening->child_age_in_months]);
-            
-            return redirect()->route('questionnaire.show', [
-                'childId' => $screeningId,
-                'ageGroup' => $previousAgeGroup
-            ])->with('status', 'Please complete the previous age group checklist.');
+                    \Log::info('Created screening history for delay case:', [
+                        'screening_history_id' => $screeningHistory->id,
+                        'screening_id' => $screeningId
+                    ]);
+                } else {
+                    // For guests, store in ScreeningMilestoneProgress
+                    $milestoneProgress = ScreeningMilestoneProgress::create([
+                        'screening_id' => $screeningId,
+                        'responses' => json_encode($milestoneResponses),
+                        'has_delay' => $hasDelay
+                    ]);
+                }
+
+                // Redirect to questionnaire with previous age group
+                return redirect()->route('questionnaire.show', [
+                    'childId' => $screeningId,
+                    'ageGroup' => $previousAgeGroup
+                ]);
+            }
         }
 
-        // Update developmental age and completion status
-        $developmentalAge = session('last_failed_age_group_' . $screeningId) ? $currentAgeGroup : $screening->child_age_in_months;
-        $screening->update(['child_age_in_months' => $developmentalAge]);
-        
-        Session::put('questionnaire_completed', true);
-        session(['completed_screening_' . $screeningId => true]);
-        session(['has_delay_' . $screeningId => $hasDelay]);
-        session(['final_developmental_age_' . $screeningId => $developmentalAge]);
+        // If no delay or no previous age group available, store final results
+        if (Auth::check() && !Auth::user()->isGuest) {
+            // For logged-in users, store in ScreeningHistory
+            $screeningHistory = ScreeningHistory::create([
+                'user_id' => Auth::id(),
+                'screening_id' => $screeningId,
+                'fname' => $screening->fname,
+                'child_name' => $screening->child_name,
+                'child_dob' => $screening->child_dob,
+                'child_age_in_months' => $screening->child_age_in_months,
+                'child_gender' => $screening->child_gender,
+                'milestone_responses' => json_encode($milestoneResponses),
+                'checklist_age' => $currentAgeGroup,
+                'has_delay' => $hasDelay,
+                'developmental_age' => $currentAgeGroup
+            ]);
 
-        Session::forget('screening_in_progress');
-        Session::put('questionnaire_completed', true);
-        
-        return redirect()->route('screening.result', ['screeningId' => $screeningId]);
+            \Log::info('Created final screening history:', [
+                'screening_history_id' => $screeningHistory->id,
+                'screening_id' => $screeningId
+            ]);
+
+            // Set session variables
+            Session::put('questionnaire_completed', true);
+            session([
+                'completed_screening_' . $screeningId => true,
+                'has_delay_' . $screeningId => $hasDelay,
+                'final_developmental_age_' . $screeningId => $currentAgeGroup
+            ]);
+
+            Session::forget('screening_in_progress');
+
+            // Redirect using screening_history_id for logged-in users
+            return redirect()->route('screening.result', ['screeningId' => $screeningHistory->id]);
+
+        } else {
+            // For guests, store in ScreeningMilestoneProgress
+            $milestoneProgress = ScreeningMilestoneProgress::create([
+                'screening_id' => $screeningId,
+                'responses' => json_encode($milestoneResponses),
+                'has_delay' => $hasDelay
+            ]);
+
+            $screening->update([
+                'has_delay' => $hasDelay,
+                'checklist_age' => $currentAgeGroup
+            ]);
+
+            // Set session variables
+            Session::put('questionnaire_completed', true);
+            session([
+                'completed_screening_' . $screeningId => true,
+                'has_delay_' . $screeningId => $hasDelay,
+                'final_developmental_age_' . $screeningId => $currentAgeGroup
+            ]);
+
+            Session::forget('screening_in_progress');
+
+            // For guests, continue using screening_id
+            return redirect()->route('screening.result', ['screeningId' => $screeningId]);
+        }
     }
     
     // Helper function to determine the previous age group
@@ -224,34 +296,59 @@ class ScreeningController extends Controller
 
     public function showResult($screeningId)
     {
-        $screening = Screening::with('milestoneProgress')->findOrFail($screeningId);
-        
-        // If they had to do a previous age group test, they have a delay
-        $hasDelay = session('last_failed_age_group_' . $screeningId) !== null;
-        
-        $developmentalAge = session('final_developmental_age_' . $screeningId, $screening->child_age_in_months);
-        $originalAge = session('original_age_' . $screeningId, $screening->child_age_in_months);
-        
-        $healthcareCenter = $hasDelay ? (object)[
-            'name' => 'Klinik Kesihatan Putrajaya Presint 9',
-            'address' => 'Jalan P9E, Presint 9',
-            'postal_code' => '62250',
-            'city' => 'Putrajaya',
-            'state' => 'W.P. Putrajaya',
-            'latitude' => 2.9235,
-            'longitude' => 101.6965
-        ] : null;
+        try {
+            $screening = null;
+            $allProgress = null;
+            $developmentalAge = null;
+            $hasDelay = false;
 
-        return Response::view('result', [
-            'screening' => $screening,
-            'hasDelay' => $hasDelay,
-            'healthcareCenter' => $healthcareCenter,
-            'developmentalAge' => $developmentalAge,
-            'originalAge' => $originalAge
-        ])
-        ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
-        ->header('Pragma', 'no-cache')
-        ->header('Expires', '0');
+            // For logged-in users, use screening_histories.id directly
+            if (Auth::check() && !Auth::user()->isGuest) {
+                $screening = ScreeningHistory::where('id', $screeningId)
+                    ->where('user_id', Auth::id())
+                    ->first();
+
+                if (!$screening) {
+                    \Log::error('Could not find screening history record', [
+                        'id' => $screeningId,
+                        'user_id' => Auth::id()
+                    ]);
+                    abort(404, 'No screening history found');
+                }
+
+                // Get all related screening history records for this user
+                $allScreeningHistory = ScreeningHistory::where('user_id', Auth::id())
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+                $allProgress = $allScreeningHistory->count();
+                
+                // Use the values from the current screening
+                $hasDelay = $screening->has_delay;
+                $developmentalAge = $screening->developmental_age;
+            } else {
+                // Guest user logic remains the same
+                $screening = Screening::findOrFail($screeningId);
+                $hasDelay = session('has_delay_' . $screeningId, false);
+                $developmentalAge = session('final_developmental_age_' . $screeningId);
+            }
+
+            $redirectUrl = Auth::check() && !Auth::user()->isGuest 
+                ? route('dashboard') 
+                : route('home');
+
+            return view('result', compact(
+                'screening',
+                'hasDelay',
+                'developmentalAge',
+                'redirectUrl',
+                'allProgress'
+            ));
+
+        } catch (\Exception $e) {
+            \Log::error('Error showing screening result: ' . $e->getMessage());
+            abort(404);
+        }
     }
 
     private function getNearestHealthcareCenter()
@@ -264,5 +361,21 @@ class ScreeningController extends Controller
             'city' => 'Putrajaya',
             'state' => 'W.P. Putrajaya'
         ];
+    }
+
+    public function destroy($id)
+    {
+        $screening = Screening::findOrFail($id);
+        
+        // Check if the user owns this screening
+        if (Auth::id() !== $screening->user_id) {
+            abort(403);
+        }
+        
+        $screening->delete();
+        
+        return redirect()
+            ->route('screening.history')
+            ->with('success', 'Rekod saringan telah berjaya dipadamkan.');
     }
 }

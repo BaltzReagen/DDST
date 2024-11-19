@@ -2,18 +2,43 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Screening extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'fname', 'child_name', 'child_dob', 'child_age_in_months', 'child_gender'];
+    protected $fillable = [
+        'child_id',
+        'user_id',
+        'fname',           // Add this line
+        'child_name',
+        'child_dob',
+        'child_age_in_months',
+        'child_gender',
+        'checklist_age',
+        'has_delay',
+        'checklist_ages'
+    ];
+
+    protected $casts = [
+        'has_delay' => 'boolean',
+        'checklist_ages' => 'array'
+    ];
+
+    public function child()
+    {
+        return $this->belongsTo(Child::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(ScreeningAnswer::class);
+    }
 
     public function milestoneProgress()
     {
-        return $this->hasMany(ScreeningMilestoneProgress::class, 'screening_id');
+        return $this->hasOne(ScreeningMilestoneProgress::class);
     }
 }

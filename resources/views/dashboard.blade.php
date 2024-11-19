@@ -40,11 +40,11 @@
 
         <script>
             function viewPastResults() {
-                window.location.href = '/view-results';
+                window.location.href = '{{ route("screening.history") }}';
             }
 
             function useScreeningTool() {
-                window.location.href = '/screening-tool';
+                window.location.href = '{{ route("form") }}';
             }
 
             document.addEventListener("DOMContentLoaded", function() {

@@ -283,7 +283,7 @@
 
     <body class="result-page">
         <div class="logo-container">
-            <a href="{{ url('/') }}" class="logo-wrapper">
+            <a href="{{ Auth::check() && !Auth::user()->isGuest ? route('dashboard') : url('/') }}" class="logo-wrapper">
                 <img src="{{ asset('images/logo.png') }}" alt="DDST Logo" class="site-logo">
             </a>
         </div>
@@ -391,11 +391,13 @@
                             <i class="material-icons">feedback</i> Maklum Balas
                         </a>
 
-                        @if(!Auth::check())
-                        <a href="{{ route('signup') }}" class="btn btn-primary action-btn">
-                            <i class="material-icons">person_add</i> Daftar Akaun
-                        </a>
-                        @endif
+                        @guest
+                            @if(!Auth::check())
+                            <a href="{{ route('signup') }}" class="btn btn-primary action-btn">
+                                <i class="material-icons">person_add</i> Daftar Akaun
+                            </a>
+                            @endif
+                        @endguest
                     </div>
                 </div>
 

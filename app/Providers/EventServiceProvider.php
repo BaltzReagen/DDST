@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         'Illuminate\Auth\Events\Registered' => [
             'App\Listeners\MoveScreeningToHistory',
         ],
+        Registered::class => [
+            MoveScreeningToHistory::class,
+        ],
     ];    
 
     /**

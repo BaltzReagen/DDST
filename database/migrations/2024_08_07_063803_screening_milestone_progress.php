@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('screening_milestone_progress', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('screening_id');
-            $table->json('responses'); // JSON column to store all milestone responses
+            $table->json('responses');
+            $table->integer('checklist_age')->nullable();
             $table->boolean('has_delay')->default(false);
             $table->timestamps();
         
