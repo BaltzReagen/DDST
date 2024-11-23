@@ -4,11 +4,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sejarah Saringan</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     </head>
     <body>
         @include('components.logo-header')
+
+        <div class="background-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
         
         <div class="screening-history-main">
             <div class="screening-history-wrapper">

@@ -16,7 +16,8 @@ class ScreeningHistory extends Model
         'milestone_responses',
         'checklist_age',
         'has_delay',
-        'developmental_age'
+        'developmental_age',
+        'first_screening_id'
     ];
 
     protected $casts = [
@@ -28,5 +29,15 @@ class ScreeningHistory extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function screening()
+    {
+        return $this->belongsTo(Screening::class);
+    }
+
+    public function firstScreening()
+    {
+        return $this->belongsTo(Screening::class, 'first_screening_id');
     }
 }

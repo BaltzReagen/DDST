@@ -11,9 +11,17 @@ class ScreeningMilestoneProgress extends Model
     use HasFactory;
 
     protected $table = 'screening_milestone_progress';
-    protected $fillable = ['screening_id', 'responses', 'is_achieved', 'has_delay'];
+    
+    protected $fillable = [
+        'screening_id',
+        'first_screening_id',
+        'responses',
+        'is_achieved',
+        'has_delay',
+        'checklist_age',
+        'developmental_age'
+    ];
 
-    // Specify that 'responses' should be cast to JSON for easy access in code
     protected $casts = [
         'responses' => 'json',
         'has_delay' => 'boolean',
@@ -28,5 +36,9 @@ class ScreeningMilestoneProgress extends Model
     {
         return $this->belongsTo(Screening::class);
     }
-}
 
+    public function firstScreening()
+    {
+        return $this->belongsTo(Screening::class, 'first_screening_id');
+    }
+}

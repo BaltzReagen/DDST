@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reset Kata Laluan</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -16,6 +17,10 @@
     <div class="login-container">
         <div class="login-box">
             <h1>Reset Kata Laluan</h1>
+
+            <div class="alert alert-info">
+                <p>Nota: Jika anda mendaftar menggunakan Google, sila gunakan butang "Login dengan Google" di halaman log masuk.</p>
+            </div>
 
             @if (session('status'))
                 <div class="alert alert-success">

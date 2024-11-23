@@ -34,8 +34,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'tindak_balas_refleks',
                 'isCritical' => false,
                 'description' => 'Bayi mengenggam tangan sendiri (Grasp Reflex).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Palmar Grasp Reflex Reaction Infant Newborn Pediatric Nursing Assessment',
+                'key' => 'IlbYFBEgpJI',
                 'image_path' => $imagePath,   
             ],
             [
@@ -66,7 +66,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Mengerdipkan mata apabila terdedah dengan cahaya dan apabila tangan ditepuk di hadapan muka.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_5.jpg",   
             ],
             [
                 'id' => 6,
@@ -84,8 +84,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => true,
                 'description' => 'Mengeluarkan bunyi (Cooing). Contoh: bunyi “aah, oo, gah, uu”.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Newborn Cooing',
+                'key' => 'dG1j-ApPGAc',
                 'image_path' => $imagePath,   
             ],
             [
@@ -94,8 +94,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Senyum secara spontan',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "Understanding Baby's Smile | A Parenting Guide",
+                'key' => 'CJpBgxrfgNE',
                 'image_path' => $imagePath,   
             ],
             [
@@ -106,7 +106,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memandang muka ibu bapa atau penjaga pada jarak dekat.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_9.jpg",   
             ],
             [
                 'id' => 10,
@@ -114,8 +114,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kognitif',
                 'isCritical' => false,
                 'description' => 'Melihat pergerakan objek atau orang pada jarak yang dekat (dengan jarak satu (1) lengan).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'How to Help Baby Visually Track Objects',
+                'key' => 'hbdcQAfPqbg',
                 'image_path' => $imagePath,   
             ],
             
@@ -126,8 +126,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => true,
                 'description' => 'Menggerakkan seluruh anggota badan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Moves both arms and both legs',
+                'key' => 'R7kQMd8M3U4',
                 'image_path' => $imagePath,   
             ],
             [
@@ -136,8 +136,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => true,
                 'description' => 'Berupaya menegakkan kepala semasa didukung.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Meeting Milestones – How to Help Baby Lift & Hold Head Up',
+                'key' => 'wL4Xu8u1EgE',
                 'image_path' => $imagePath,   
             ],
             [
@@ -148,7 +148,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memaut jari-jemari ibu bapa atau penjaga apabila ditarik untuk duduk.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_13.jpg",   
             ],
             [
                 'id' => 14,
@@ -156,8 +156,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_halus',
                 'isCritical' => false,
                 'description' => 'Memegang atau menggoncang mainan apabila diletak pada tangan dalam tempoh singkat (dalam tempoh lima (5) saat).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Baby with Rattle',
+                'key' => '_jRt7e_ib8o',
                 'image_path' => $imagePath,   
             ],
             [
@@ -168,7 +168,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Membelek dan bermain jari jemari sendiri.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_15.jpg",   
             ],
             [
                 'id' => 16,
@@ -178,7 +178,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memberi tumpuan kepada objek yang berada di sekeliling.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_16.jpg",   
             ],
             [
                 'id' => 17,
@@ -186,8 +186,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pendengaran',
                 'isCritical' => true,
                 'description' => 'Menunjukkan respon dan memalingkan kepala mengikut arah sumber bunyi.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '4 Months – Turns head towards the sound of your voice',
+                'key' => 'dPvQazyoRS0',
                 'image_path' => $imagePath,   
             ],
             [
@@ -196,8 +196,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => true,
                 'description' => 'Menghasilkan bunyi seperti mengekek, mendengus atau menjerit.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "Baby's scream turns into giggles as he plays with dad",
+                'key' => 'oijRJIHsQGk',
                 'image_path' => $imagePath,   
             ],
             [
@@ -206,8 +206,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Menangis atau merengek apabila tidak selesa, sakit atau lapar dan sebagainya.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Hungry Newborn Crying//One-week-old baby Finn Tresize is hungry for his morning milk//Gary Tresize//',
+                'key' => 'KJBQowkcky0',
                 'image_path' => $imagePath,   
             ],
             [
@@ -216,8 +216,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Senyum atau membalas senyuman kepada ibu bapa atau penjaga.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '2-Months Smiles when you talk to or smile at him',
+                'key' => 'osLAmjKZm6s',
                 'image_path' => $imagePath,   
             ],
             [
@@ -226,8 +226,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kognitif',
                 'isCritical' => false,
                 'description' => 'Memberi tindak balas apabila ibu bapa atau penjaga menggeletek dan bermain bersamanya.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Ticklish Baby',
+                'key' => 'kghas4Alh-k',
                 'image_path' => $imagePath,   
             ],
 
@@ -238,8 +238,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => true,
                 'description' => 'Meniarap dan menelentang.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Rolling supine (back) to prone (tummy)',
+                'key' => 'cZj5x94E8vc',
                 'image_path' => $imagePath,   
             ],
             [
@@ -250,7 +250,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Duduk dengan sokongan atau bantuan (dipegang oleh orang lain).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_23.jpg",   
             ],
             [
                 'id' => 24,
@@ -260,7 +260,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh menggenggam objek (contoh: menggenggam permainan bersaiz kecil).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_24.jpg",   
             ],
             [
                 'id' => 25,
@@ -268,8 +268,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'penglihatan',
                 'isCritical' => false,
                 'description' => 'Mata mengikut arah objek yang digerakkan (contoh: kiri, kanan, atas dan bawah).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'How to Help Baby Visually Track Objects',
+                'key' => 'hbdcQAfPqbg',
                 'image_path' => $imagePath,   
             ],
             [
@@ -278,8 +278,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pendengaran',
                 'isCritical' => true,
                 'description' => 'Menunjukkan reaksi kepada arah sumber bunyi daripada orang atau persekitaran (contoh: menoleh, menangis, terkejut atau terdiam).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Reacts to loud sounds',
+                'key' => 'ZQ2tm9mvDG4',
                 'image_path' => $imagePath,   
             ],
             [
@@ -288,8 +288,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Menyebut suku kata berulang kali (contoh: pa..pa..pa, ma..ma..ma).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'CUTE BABY SAYING PAPA|BABY SAYING PAPA|BABY SAYS PAPA |FIRST WORDS|BABY|BABY SHORTS|BABY GIRL|SHORTS',
+                'key' => '0roeVN9gig8',
                 'image_path' => $imagePath,   
             ],
             [
@@ -298,8 +298,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Menghasilkan bunyi seperti ketawa, menjerit, mengekek dan bunyi tidak bermakna apabila diajak bercakap (contoh: aah... oo... mm… daa, menyembur air liur dan sebagainya).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'How Your Baby Talks and Babbles at 5 Months Old - Typical Development',
+                'key' => '8nTo27CI59Q',
                 'image_path' => $imagePath,   
             ],
             [
@@ -310,7 +310,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Mengangkat tangan minta didukung.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_29.jpg",   
             ],
             [
                 'id' => 30,
@@ -320,7 +320,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Bermain sendiri seperti bermain jari jemari tangan dan kaki.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_30.jpg",   
             ],
             [
                 'id' => 31,
@@ -328,8 +328,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Memberi respons apabila melihat diri melalui cermin(contoh: senyum, ketawa).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "Who's That Baby In The Mirror? Baby Doesn't Recognize Reflection After Haircut! (ORIGINAL)",
+                'key' => 'DlFfSx4jUuiT0a_g',
                 'image_path' => $imagePath,   
             ],
             [
@@ -340,7 +340,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh mencapai objek yang diletakkan di hadapan.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_32.jpg",   
             ],
 
             //Seeder for 9 months old
@@ -350,8 +350,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => true,
                 'description' => 'Duduk sendiri tanpa sokongan atau bantuan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'My 9 month old baby can sit without support!',
+                'key' => 'wfs0s4fla7U',
                 'image_path' => $imagePath,   
             ],
             [
@@ -360,8 +360,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Mula cuba untuk merangkak.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'baby crawling for the first time',
+                'key' => 'MYBNE4ysEEU',
                 'image_path' => $imagePath,   
             ],
             [
@@ -372,15 +372,15 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memindahkan objek dari satu tangan ke tangan sendiri yang lain (contoh pindah objek dari tangan kiri ke tangan kanak-kanak dan sebaliknya).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_35.jpg",   
             ],[
                 'id' => 36,
                 'age_group' => 9,
                 'domain' => 'motor_halus',
                 'isCritical' => false,
                 'description' => 'Menyentuh, mencucuk atau mengutip objek kecil dengan menggunakan jari telunjuk dan ibu jari (Pincer Grasp).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Important Fine Motor Skills for Baby: The Pincer Grasp',
+                'key' => 'pymSN_42DU0',
                 'image_path' => $imagePath,   
             ],
             [
@@ -389,8 +389,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'penglihatan',
                 'isCritical' => false,
                 'description' => 'Memerhati dan mengikut pergerakan objek yang sedang atau telah jatuh.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "Newborn Baby's Vision | Development of Infant Visual Tracking| Newborn's ability to follow an object",
+                'key' => 'vKyI5fDy75I',
                 'image_path' => $imagePath,   
             ],
             [
@@ -399,8 +399,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pendengaran',
                 'isCritical' => true,
                 'description' => 'Mencari sumber bunyi persekitaran.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Hari KE 76 : BAYI MULAI FOKUS MENDENGARKAN DAN MENCARI SUMBER SUARA',
+                'key' => '4zKINiMPQrM',
                 'image_path' => $imagePath,   
             ],
             [
@@ -409,8 +409,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => true,
                 'description' => 'Meniru dan membuat bunyi pertuturan yang panjang (contoh: pa-pa-ba-da-ka-ba-ga dan sebagainya).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "2 Month Old Baby's CUTE Conversation With Her Daddy",
+                'key' => 'NPYRHeuVm10',
                 'image_path' => $imagePath,   
             ],
             [
@@ -419,8 +419,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Memahami perkataan "tak boleh" dan "bye".',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Baby crying when daddy says no',
+                'key' => 'J5lhi2-2mFo',
                 'image_path' => $imagePath,   
             ],
             [
@@ -429,8 +429,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Pandang apabila orang berinteraksi dengannya.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'cute little baby talking with her mom. | cutest baby talk ever | baby talking at three months old',
+                'key' => 'hauezAEACiA',
                 'image_path' => $imagePath,   
             ],
             [
@@ -439,8 +439,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Menunjukkan reaksi yang berbeza apabila melihat ibu bapa atau penjaga dan orang lain (contoh senyum, berkerut, menyorok wajah, malu dan sebagainya).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Baby is so happy to see Daddy',
+                'key' => 'hDkPSWkZosw',
                 'image_path' => $imagePath,   
             ],
             [
@@ -449,8 +449,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Bermain ci-ku-cak (Peek-A-Boo).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Baby Plays Peek-A-Boo',
+                'key' => '3KOfks2kifw',
                 'image_path' => $imagePath,   
             ],
             [
@@ -459,8 +459,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kognitif',
                 'isCritical' => false,
                 'description' => 'Manipulasi objek seperti mengetuk objek, menekan butang, menarik kain atau menjatuhkan objek secara sengaja.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Mom playing with her baby girl',
+                'key' => 'mHfAr6eE3fU',
                 'image_path' => $imagePath,   
             ],
             [
@@ -471,7 +471,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memasukkan objek ke dalam mulut.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_45.jpg",   
             ],
             [
                 'id' => 46,
@@ -481,7 +481,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Mencuba untuk mencapai objek yang jatuh.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_46.jpg",   
             ],
 
             //Seeder for 12 months old
@@ -491,8 +491,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Berdiri dengan bantuan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Baby Development | Sitting | Supported Standing',
+                'key' => 'EYmY-BKQmE',
                 'image_path' => $imagePath,   
             ],
             [
@@ -501,8 +501,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Berjalan sambil memegang sebelah tangan ibu bapa atau memaut pada perabot.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Cayden walking',
+                'key' => 'PRzV8PL7Na8',
                 'image_path' => $imagePath,   
             ],
             [
@@ -513,7 +513,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Menyelak muka surat pada buku yang tebal.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_49.jpg",   
             ],
             [
                 'id' => 50,
@@ -523,7 +523,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Menunjuk dengan jari telunjuk pada objek yang diminati.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_50.jpg",   
             ],
             [
                 'id' => 51,
@@ -531,8 +531,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_halus',
                 'isCritical' => true,
                 'description' => 'Boleh mengutip objek kecil di sekitarnya tanpa meletakkan siku, lengan dan pergelangan tangan pada permukaan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'BABY PICKING UP TOYS (12 months old)',
+                'key' => 'CYEQKzSRZKY',
                 'image_path' => $imagePath,   
             ],
             [
@@ -543,7 +543,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memasukkan objek ke dalam lubang berdasarkan bentuk objek (contoh: shape shorter, insert puzzle).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_52.jpg",   
             ],
             [
                 'id' => 53,
@@ -551,8 +551,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pendengaran',
                 'isCritical' => false,
                 'description' => 'Terus menoleh apabila nama dipanggil.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Baby Responding To Name | Cute Baby Responds To Sound | When Do Baby Recognises Their Name |',
+                'key' => '8grPhdbOGWk',
                 'image_path' => $imagePath,   
             ],
             [
@@ -561,8 +561,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Boleh mengikut arahan mudah (contoh: mari sini, jom, bagi ayah, angkat tangan dan sebagainya).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Smart Baby - Following Instructions',
+                'key' => 'SpJAC-E-9aY',
                 'image_path' => $imagePath,   
             ],
             [
@@ -571,8 +571,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Mula menggunakan sekurang-kurangnya satu perkataan mengikut situasi yang sesuai (perkataan hendaklah bermakna, contoh bola, mama, nak).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '15 Month Old Saying Mummy, Baby & Daddy | Life With Pink Princesses',
+                'key' => 'NfxsKkAZukw',
                 'image_path' => $imagePath,   
             ],
             [
@@ -581,8 +581,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Melambai dan menepuk tangan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Sita Ram and clapping',
+                'key' => 'OxE5UcfnCsw',
                 'image_path' => $imagePath,   
             ],
             [
@@ -593,7 +593,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Menghulurkan tangan apabila hendak dipakaikan baju dan kaki apabila hendak memakai seluar atau kasut.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_57.jpg",   
             ],
             [
                 'id' => 58,
@@ -603,7 +603,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Mencari benda tersembunyi di pelbagai lokasi.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_58.jpg",   
             ],
             [
                 'id' => 59,
@@ -611,8 +611,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kognitif',
                 'isCritical' => false,
                 'description' => 'Boleh menggunakan objek mengikut kegunaan yang betul (contoh: menggunakan sudu, sikat, cawan, telefon).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '2 years old baby eating by herself with spoon',
+                'key' => 'YTb2QwMdX5I',
                 'image_path' => $imagePath,   
             ],
 
@@ -625,7 +625,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Berjalan sendiri.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_60.jpg",   
             ],
             [
                 'id' => 61,
@@ -633,8 +633,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Memanjat tangga, meja, kerusi dan lain-lain.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '1 year old baby climbing stairs',
+                'key' => '9dlffv6VyXg',
                 'image_path' => $imagePath,   
             ],
             [
@@ -645,7 +645,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Menconteng menggunakan krayon, pensel atau pen.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_62.jpg",   
             ],
             [
                 'id' => 63,
@@ -655,7 +655,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh membuka beberapa helaian muka surat buku.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_63.jpg",   
             ],
             [
                 'id' => 64,
@@ -665,7 +665,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Membina menara menggunakan tiga blok atau kiub mainan.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_64.jpg",   
             ],
             [
                 'id' => 65,
@@ -673,8 +673,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'penglihatan',
                 'isCritical' => false,
                 'description' => 'Memerhati pergerakan orang yang dikenali pada sesuatu jarak.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "Hilarious Baby's Reaction to Mom's Snoring!",
+                'key' => 'cSlYz-ChycI',
                 'image_path' => $imagePath,   
             ],
             [
@@ -685,7 +685,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh menunjuk (dengan jari) pada objek yang diminati di jarak yang jauh.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_66.jpg",   
             ],
             [
                 'id' => 67,
@@ -695,7 +695,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Suka melihat gambar-gambar dalam buku.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_67.jpg",   
             ],
             [
                 'id' => 68,
@@ -705,7 +705,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Menunjuk kepada objek atau gambar yang disebut oleh orang lain (contoh: ibu sebut kucing, anak tunjuk kucing).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_68.jpg",   
             ],
             [
                 'id' => 69,
@@ -713,8 +713,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Menggunakan sekurang-kurangnya 6 - 20 perkataan dalam rutin harian (perkataan hendaklah bermakna, contoh susu, air, makan dan tidur).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Almost 13 months old, talking with Angie',
+                'key' => 'ioP0Tdwx95w',
                 'image_path' => $imagePath,   
             ],
             [
@@ -723,8 +723,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Menggabungkan dua perkataan dalam satu ayat pendek (contoh: nak susu, kucing tidur, jom main).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '2 year old impersonates adults talking on the phone OMG',
+                'key' => 'FcESTs6hDZk',
                 'image_path' => $imagePath,   
             ],
             [
@@ -735,7 +735,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memeluk anak patung atau patung haiwan.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_71.jpg",   
             ],
             [
                 'id' => 72,
@@ -745,7 +745,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memegang dan minum menggunakan cawan tanpa bantuan.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_72.jpg",   
             ],
             [
                 'id' => 73,
@@ -755,7 +755,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Meniru aktiviti orang dewasa (contoh: lap meja, sikat rambut, menyapu dan lain-lain).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_73.jpg",   
             ],
             [
                 'id' => 74,
@@ -765,7 +765,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Tidak lagi memasukkan objek ke dalam mulut.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_74.jpg",   
             ],
             [
                 'id' => 75,
@@ -775,7 +775,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Menjatuhkan atau memasuk semula beberapa alat permainan atau objek ke dalam bekas, kotak, mangkuk dan sebagainya.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_75.jpg",   
             ],
 
             //Seeder for 24 months old
@@ -785,8 +785,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => true,
                 'description' => 'Berlari 10 kaki ke hadapan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "These toddlers' heartwarming reaction to spotting each other on the street will make your day",
+                'key' => 'zIZ8l5XeQ3k',
                 'image_path' => $imagePath,   
             ],
             [
@@ -795,8 +795,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Menolak dan menarik permainan beroda (contoh: basikal, kereta mainan).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Yvolution Y Velo Junior | Award-Winning Balance Bike for Toddlers',
+                'key' => 'Fl3YtRY12Mg',
                 'image_path' => $imagePath,   
             ],
             [
@@ -805,8 +805,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => true,
                 'description' => 'Cuba menyepak dan menendang bola bersaiz besar dengan perlahan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '2-year-old Georgia soccer star goes viral',
+                'key' => 'r1Pr2Okuh-k',
                 'image_path' => $imagePath,   
             ],
             [
@@ -845,8 +845,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'penglihatan',
                 'isCritical' => false,
                 'description' => 'Menganggar ketinggian atau kedalaman (depth) sesuatu objek (contoh: apabila menurun katil, sofa, tangga atau melangkah lubang atau longkang).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Incredible Escape: Watch This Baby Climbing Out of the Crib',
+                'key' => '6W2gJBu2khI',
                 'image_path' => $imagePath,   
             ],
             [
@@ -857,7 +857,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh mengikut arahan mudah (contoh: “Ambil bola di atas meja”).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_83.jpg",   
             ],
             [
                 'id' => 84,
@@ -865,8 +865,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => true,
                 'description' => 'Menunjuk atau menamakan gambar atau objek apabila ditanya oleh orang lain.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '30 Months – Names things in a book when you point and ask, “What is this?”',
+                'key' => '2S6KHEA7Y_A',
                 'image_path' => $imagePath,   
             ],
             [
@@ -875,8 +875,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Sering meniru perkataan yang didengari daripada orang lain.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '2 year old impersonates adults talking on the phone OMG',
+                'key' => 'FcESTs6hDZk',
                 'image_path' => $imagePath,   
             ],
             [
@@ -887,7 +887,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Bermain anak patung atau patung haiwan (contoh: memeluk, cium, memberi makanan kepada teddy bear atau anak patung).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_86.jpg",   
             ],
             [
                 'id' => 87,
@@ -897,7 +897,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Bermain berdekatan dengan orang lain tetapi tidak suka berkongsi permainan.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_87.jpg",   
             ],
             [
                 'id' => 88,
@@ -907,7 +907,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Meletak semula barang di tempatnya (contoh: simpan mainan di dalam bekas mainan).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_88.jpg",   
             ],
             [
                 'id' => 89,
@@ -915,8 +915,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kognitif',
                 'isCritical' => false,
                 'description' => 'Menggunakan 1 objek sebagai benda lain (contoh: alat kawalan jauh sebagai telefon, blok kayu sebagai kereta).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "BABY'S CHOICE - TOYS -vs- LITERALLY ANYTHING ELSE",
+                'key' => 'drWug-hqLmI',
                 'image_path' => $imagePath,   
             ],
 
@@ -927,8 +927,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Cekap menggunakan kaki seperti melompat dan memanjat.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Baby demonstrates comically unique way of climbing stairs',
+                'key' => '5Sj6ob0twpU',
                 'image_path' => $imagePath,   
             ],
             [
@@ -937,8 +937,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Naik tangga berselang kaki tanpa bantuan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Stair Climbing Baby',
+                'key' => 'v9ZzISyeAnY',
                 'image_path' => $imagePath,   
             ],
             [
@@ -949,7 +949,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Membina menara menggunakan 9 -10 kiub.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_92.jpg",   
             ],
             [
                 'id' => 93,
@@ -959,7 +959,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh menyalin bentuk bulat.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_93.jpg",   
             ],
             [
                 'id' => 94,
@@ -969,7 +969,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh menggunting hujung kertas (Snipping).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_94.jpg",   
             ],
             [
                 'id' => 95,
@@ -979,7 +979,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Mengikut dua peringkat arahan dalam satu masa (contoh: “letak beg atas meja dan susun kasut dalam rak”).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_95.jpg",   
             ],
             [
                 'id' => 96,
@@ -987,8 +987,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Boleh memberitahu nama penuh sendiri.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Self Introduction for Kids/Babies | Myself by 3 years old baby | How to introduce your self -English',
+                'key' => 'wp0TQUEyapM',
                 'image_path' => $imagePath,   
             ],
             [
@@ -999,7 +999,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Membina ayat menggunakan tiga hingga empat perkataan dengan lancar (contoh: saya suka makan roti, ibu tolong buka pintu).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_97.jpg",   
             ],
             [
                 'id' => 98,
@@ -1009,7 +1009,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Bermain permainan olok-olok (Pretend Play) menggunakan objek bersama-sama kawan (contoh: bermain masak-masak, memandu kereta).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_98.jpg",   
             ],
             [
                 'id' => 99,
@@ -1017,8 +1017,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => true,
                 'description' => 'Boleh menyuap makanan ke mulut menggunakan sudu, garfu atau tangan dengan baik (kurang bersepah).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Self-Feeding Baby',
+                'key' => 'gHdaNyNPBOE',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1027,8 +1027,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => true,
                 'description' => 'Boleh memakai dan menanggalkan baju t-shirt dan seluar tanpa bantuan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Kids Try to Dress Themselves for the First Time',
+                'key' => 'URxMvsufOQY',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1039,7 +1039,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memadankan dua atau tiga warna asas seperti warna merah, kuning, hijau.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_101.jpg",   
             ],
             [
                 'id' => 102,
@@ -1049,7 +1049,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Menyelesaikan masalah mudah seperti mengambil kerusi untuk mencapai objek di tempat tinggi.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_102.jpg",   
             ],
             [
                 'id' => 103,
@@ -1059,7 +1059,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh mengecam bentuk asas △ ▭ ◯.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_103.jpg",   
             ],
             
             //Seeder for 48 months old
@@ -1069,8 +1069,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Lompat ke hadapan dengan sebelah kaki.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => '#20 Hop on One Foot and Stop: Pediatric Physical Therapy Exercises for Balance',
+                'key' => 'p5RQFk6JwQc',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1079,8 +1079,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Berlari laju dan berhenti tanpa jatuh.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Excited Toddler Runs To Dad After Class',
+                'key' => 'SAs6ij06JBw',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1089,8 +1089,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Turun tangga berselang kaki tanpa bantuan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Adorable toddler takes his precious time going down the stairs',
+                'key' => 'WCjdiAf8W2M',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1111,7 +1111,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh melukis gambar orang yang mempunyai sekurang-kurangnya tiga daripada angggota badan seperti kepala, mata, hidung, mulut, leher, badan, rambut atau tangan.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_108.jpg",   
             ],
             [
                 'id' => 109,
@@ -1121,7 +1121,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh menggunting kertas menjadi separuh dalam satu garisan lurus.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_109.jpg",   
             ],
             [
                 'id' => 110,
@@ -1129,8 +1129,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Menjawab soalan berkaitan aktiviti harian (contoh: Apa awak buat bila lapar? “Saya makan atau makan nasi”).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "INTERVIEW WITH A FOUR YEAR OLD | ELIZA'S 4 YEAR INTERVIEW",
+                'key' => 'sWzM4HCI3g0',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1139,8 +1139,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Boleh menerangkan dua perkara tentang sesuatu objek dengan jelas (contoh: Kereta ada empat tayar, kereta laju, kertas warna merah).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Kids Explain...Asking Questions',
+                'key' => 'oEDVMkzAUPs',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1149,8 +1149,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Boleh bertanya soalan mengguna soalan ‘apa?, kenapa? Bagaimana? (contoh: “Kenapa awak nangis?”).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Asking for Help | How Parents Can Teach their Kids How to Ask For Help',
+                'key' => 'jSC54737gTg',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1161,7 +1161,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Bermain dengan melakonkan semula sesuatu watak (contoh: berlakon watak cikgu, doktor atau polis).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_113.jpg",   
             ],
             [
                 'id' => 114,
@@ -1171,7 +1171,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Membasuh atau mengeringkan tangan menggunakan kain atau tisu tanpa bantuan.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_114.jpg",   
             ],
             [
                 'id' => 115,
@@ -1181,7 +1181,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh memberitahu nama sekurang-kurangnya dua orang kawan tidak termasuk adik-beradik.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_115.jpg",   
             ],
             [
                 'id' => 116,
@@ -1191,7 +1191,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh menggunakan blok atau kiub untuk membina menara atau beberapa jambatan daripada 10 atau lebih blok atau kiub.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_116.jpg",   
             ],
             [
                 'id' => 117,
@@ -1201,7 +1201,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh mengira lima objek yang dilihat satu persatu mengikut urutan (contoh: ‘ada 1, 2, 3, 4, 5 kereta’).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_117.jpg",   
             ],
             [
                 'id' => 118,
@@ -1209,8 +1209,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kognitif',
                 'isCritical' => false,
                 'description' => 'Memahami konsep "sama" dan "berbeza" (contoh: "itik" dan "matahari" kuning, “ini baju, bukan seluar”).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Look Closely!: Describing Similarities and Differences Between Objects',
+                'key' => 'j8JXlDjJJQU',
                 'image_path' => $imagePath,   
             ],
 
@@ -1221,8 +1221,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Boleh berdiri dengan satu kaki selama 8 - 10 saat.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'One Leg Spelling',
+                'key' => 'BTC3_km2gok',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1231,8 +1231,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => true,
                 'description' => 'Berskip (Skipping) menggunakan dua (2) kaki atau secara berselang seli.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'PE Long Jump Rope Rhymes',
+                'key' => 'V4Cx58njydI',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1241,8 +1241,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Membaling dan menangkap bola menggunakan kedua-dua tangan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Catch throw run',
+                'key' => 'IPe9fEZ8sSQ',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1253,7 +1253,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh menggunting bentuk bulat atau segi empat tepat (petak).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_122.jpg",   
             ],
             [
                 'id' => 123,
@@ -1263,7 +1263,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh membutang baju, membuka atau menutup zip pakaian sendiri.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_123.jpg",   
             ],
             [
                 'id' => 124,
@@ -1273,7 +1273,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh melukis orang dengan sempurna (contoh: lukis orang yang mempunyai kepala, badan, tangan dan kaki).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_124.jpg",   
             ],
             [
                 'id' => 125,
@@ -1281,8 +1281,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Boleh memahami dan menggunakan konsep perbandingan (contoh: “kereta besar, tapi bas lagi besar”, “daun ringan, batu berat”).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Comparing Objects - Size, Length, Height',
+                'key' => 'DNHFKuQ_nKk',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1293,7 +1293,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh mengulang ayat yang didengari (sekurang-kurangnya lima patah perkataan dan ke atas).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_126.jpg",   
             ],
             [
                 'id' => 127,
@@ -1303,7 +1303,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh bertutur menggunakan empat hingga lima perkataan dalam satu ayat dengan tatabahasa dan bunyi sebutan yang betul (contoh: “Saya ternampak kereta berwarna kuning”).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_127.jpg",   
             ],
             [
                 'id' => 128,
@@ -1311,8 +1311,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Boleh mengambil giliran dan berkongsi barang dengan kanak-kanak lain.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Using Games to Teach Taking Turns',
+                'key' => 'fvJbRuIu4-0',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1321,8 +1321,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Mempamerkan sikap mengambil berat terhadap orang lain atau adik beradik yang lebih muda.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Take care of each other',
+                'key' => 'OTH6Q_S16qQ',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1331,8 +1331,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => false,
                 'description' => 'Boleh menggunakan tandas tanpa bantuan.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Viral Video: Potty Training Baby Has A Lot To Say',
+                'key' => 'Sib3bAE4oqc',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1341,8 +1341,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kognitif',
                 'isCritical' => false,
                 'description' => 'Boleh mengira satu hingga 15 mengikut turutan dengan betul.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Number song 1-20 for children | Counting numbers | The Singing Walrus',
+                'key' => 'D0Ajq682yrA',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1351,9 +1351,9 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kognitif',
                 'isCritical' => false,
                 'description' => 'Boleh menyebut sekurang-kurangnya empat huruf pada nama sendiri apabila ditunjuk.',
-                'youtube_title' => 'unavailable',
+                'youtube_title' => 'unavailable',   
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_132.jpg",   
             ],
             [
                 'id' => 133,
@@ -1363,7 +1363,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memahami konsep seperti masa (contoh: semalam, esok, sekarang dan lain-lain).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_133.jpg",   
             ],
 
             //Seeder from 72 to 83 months old
@@ -1373,8 +1373,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Boleh mengayuh dan menaiki basikal (dua roda).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Yvolution Y Velo Junior | Award-Winning Balance Bike for Toddlers',
+                'key' => 'Fl3YtRY12Mg',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1383,8 +1383,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'motor_kasar',
                 'isCritical' => false,
                 'description' => 'Boleh menangkap bola bersaiz lebih kecil (contoh: bola tenis, bola ping pong).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'The Basics: Catching',
+                'key' => 'j9AXCjF3CTA',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1395,7 +1395,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh mewarna bentuk-bentuk mudah dengan kemas (tidak terkeluar dari garisan).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_136.jpg",   
             ],
             [
                 'id' => 137,
@@ -1405,7 +1405,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh melukis bentuk asas tanpa melihat pada gambar bentuk.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_137.jpg",   
             ],
             [
                 'id' => 138,
@@ -1415,7 +1415,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Membuat ikatan menggunakan tali.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_138.jpg",   
             ],
             [
                 'id' => 139,
@@ -1423,8 +1423,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Boleh menceritakan semula cerita yang ditonton, didengari atau dibaca oleh orang lain (contoh: Watak dan jalan cerita yang ditonton).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Kids Show and Tell: Favorite Toy | Show and Tell | HiHo Kids',
+                'key' => '3mlEOISTIl8',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1433,8 +1433,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => true,
                 'description' => 'Bercakap menggunakan bunyi sebutan yang jelas dan lancar (percakapan difahami oleh orang yang tidak dikenali).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "Even 7 year old Kid can Speak Fluent English. Now it's your turn!",
+                'key' => '3Dwr6COD_GU',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1443,8 +1443,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'pertuturan_dan_bahasa',
                 'isCritical' => false,
                 'description' => 'Memahami dan suka kepada lawak jenaka dan tekateki.',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => "Hilarious kid comes up with brilliant name for pet moth and can't stop laughing l GAM",
+                'key' => 'RF-pniz4D9c',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1453,8 +1453,8 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kelakuan',
                 'isCritical' => true,
                 'description' => 'Cuba untuk berkawan dengan kanak-kanak sebaya (contoh: Ajak kawan bermain “Jom main sama-sama”).',
-                'youtube_title' => 'unavailable',
-                'key' => 'unavailable',
+                'youtube_title' => 'Video Modeling Asking a Friend to Play',
+                'key' => 'Ja4B4DnL57w',
                 'image_path' => $imagePath,   
             ],
             [
@@ -1465,7 +1465,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Menggunakan perkataan untuk meluahkan perasaan sendiri (contoh: Saya tak suka, saya takut lipas).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_143.jpg",   
             ],
             [
                 'id' => 144,
@@ -1475,7 +1475,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Memakai kasut pada kaki yang betul.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_144.jpg",   
             ],
             [
                 'id' => 145,
@@ -1485,7 +1485,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh menulis nombor, huruf besar atau kecil.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_145.jpg",   
             ],
             [
                 'id' => 146,
@@ -1495,7 +1495,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Membaca beberapa perkataan yang biasa dilihat (contoh: buku, bola, susu, ibu dan sebagainya).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_146.jpg",   
             ],
             [
                 'id' => 147,
@@ -1503,9 +1503,9 @@ class MilestoneSeeder extends Seeder
                 'domain' => 'kognitif',
                 'isCritical' => false,
                 'description' => 'Menulis nama sendiri tanpa bantuan (contoh: Tulis nama pendek).',
-                'youtube_title' => $imagePath,
-                'key' => $imagePath,
-                'image_path' => $imagePath,   
+                'youtube_title' => 'unavailable',
+                'key' => 'unavailable',
+                'image_path' => "/images/milestone_147.jpg",   
             ],
         ];
 

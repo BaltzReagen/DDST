@@ -1,0 +1,452 @@
+:root {
+    /* Primary Colors */
+    --primary-purple: #6366f1;
+    --primary-orange: #f97316;
+    --primary-blue: #3b82f6;
+    
+    /* Secondary Colors */
+    --secondary-yellow: #fbbf24;
+    --secondary-coral: #f43f5e;
+    
+    /* Neutral Colors */
+    --neutral-50: #f8fafc;
+    --neutral-100: #f1f5f9;
+    --neutral-200: #e2e8f0;
+    --neutral-300: #cbd5e1;
+    --neutral-400: #94a3b8;
+    --neutral-500: #64748b;
+    --neutral-600: #475569;
+    --neutral-700: #334155;
+    --neutral-800: #1e293b;
+    --neutral-900: #0f172a;
+}
+
+body {
+    background: linear-gradient(135deg, #fff5f5 0%, #fff0ea 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 62px auto 2rem;
+    padding: 0 2rem;
+}
+
+/* Header Section - Update to a more playful gradient */
+.result-header {
+    background: linear-gradient(135deg, #FF9A9E, #FAD0C4);
+    color: #4a4a4a;
+    padding: 2.5rem;
+    border-radius: 25px;  /* More rounded corners */
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 15px rgba(255, 154, 158, 0.2);
+}
+
+.result-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #4a4a4a;  /* Softer text color */
+}
+
+/* Result Cards - More playful design */
+.result-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 25px;  /* More rounded corners */
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    border: 3px solid #FAD0C4;  /* Soft border */
+}
+
+.developmental-age {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #FF9A9E;  /* Match header gradient */
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.detail-label {
+    color: var(--neutral-600);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.detail-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--neutral-800);
+    margin-bottom: 1rem;
+}
+
+/* Action Buttons - Rounder and more playful */
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.action-btn {
+    padding: 1rem 1.8rem;
+    border-radius: 50px;  /* Fully rounded */
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s;
+    background: #FF9A9E;  /* Match theme */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 15px rgba(255, 154, 158, 0.3);
+}
+
+/* Alerts - Softer colors and rounder corners */
+.alert {
+    border: none;
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert-success {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+    border: 2px solid #A5D6A7;
+}
+
+.alert-warning {
+    background-color: #FFF3E0;
+    color: #EF6C00;
+    border: 2px solid #FFCC80;
+}
+
+/* Map Section */
+#map {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    margin-top: 2rem;
+    height: 400px;
+}
+
+.healthcare-info {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+    box-shadow: var(--shadow-md);
+}
+
+.healthcare-info h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--neutral-900);
+    margin-bottom: 1rem;
+}
+
+/* Map Popup */
+.popup-content {
+    padding: 1rem;
+    font-size: 0.875rem;
+}
+
+.popup-content h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--neutral-900);
+    margin-bottom: 0.5rem;
+}
+
+.direction-btn {
+    background: var(--primary-purple);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.direction-btn:hover {
+    background: var(--primary-blue);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--neutral-600);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .result-header,
+    .result-card {
+        padding: 1.5rem;
+    }
+
+    .developmental-age {
+        font-size: 2rem;
+    }
+
+    .action-btn {
+        width: 100%;
+    }
+}
+
+.login-footer {
+    background: rgba(255, 255, 255, 0.8);
+                backdrop-filter: blur(5px);
+                border-top: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--neutral-600);
+    font-size: 0.9rem;
+    margin-top: auto;
+    border-top: 2px solid var(--neutral-100);
+}
+
+.background-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: float 20s infinite linear;
+}
+
+.shape:nth-child(1) {
+    width: 150px;
+    height: 150px;
+    top: 20%;
+    left: 10%;
+    background: linear-gradient(to right, #FF9A9E, #FAD0C4);
+    animation-delay: 0s;
+}
+
+.shape:nth-child(2) {
+    width: 200px;
+    height: 200px;
+    top: 60%;
+    right: 15%;
+    background: linear-gradient(to right, #FAD0C4, #FFD1FF);
+    animation-delay: -5s;
+}
+
+.shape:nth-child(3) {
+    width: 120px;
+    height: 120px;
+    top: 40%;
+    right: 25%;
+    background: linear-gradient(to right, #FFD1FF, #FF9A9E);
+    animation-delay: -10s;
+}
+
+/* Animation update for more playful movement */
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    50% {
+        transform: translate(100px, 100px) rotate(180deg) scale(1.1);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg) scale(1);
+    }
+}
+
+/* Header */
+/* Add these header styles at the top of your result.css file */
+
+/* Header Styles */
+.main-header {
+    background: white;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.site-logo {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.site-logo:hover {
+    transform: scale(1.05);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header-content h1 {
+    font-size: 1.25rem;
+    color: var(--neutral-800);
+    margin: 0;
+    font-weight: 600;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-yellow) 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25);
+}
+
+.logout-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
+    background: linear-gradient(135deg, var(--secondary-yellow) 0%, var(--primary-orange) 100%);
+}
+
+.logout-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2);
+}
+
+.logout-button svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    transition: transform 0.3s ease;
+}
+
+.logout-button:hover svg {
+    transform: translateX(2px);
+}
+
+/* Update your existing container styles to account for fixed header */
+.container {
+    max-width: 1200px;
+    margin: 62px auto 2rem;
+    padding: 0 2rem;
+}
+
+/* Add these to your existing media queries */
+@media (max-width: 768px) {
+    .main-header {
+        padding: 0.4rem 0.75rem;
+    }
+
+    .site-logo {
+        height: 32px;
+    }
+
+    .header-content {
+        gap: 1rem;
+    }
+
+    .header-content h1 {
+        font-size: 1rem;
+    }
+
+    .logout-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .logout-button svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .container {
+        margin-top: 52px;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-content h1 {
+        display: none;
+    }
+}
+
+/* Regular header logo */
+.result-page .logo-container {
+    display: flex;
+    justify-content: center;
+    padding: 0.25rem 0; 
+    margin-bottom: 0;
+}
+
+.result-page .site-logo {
+    height: 100px; 
+    width: auto;
+    margin-bottom: 0; 
+}
+
+/* Adjust container padding */
+.container.py-5 {
+    padding-top: -1rem !important; 
+}
+
+/* Adjust result header padding */
+.result-header {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .result-page .site-logo {
+        height: 80px;
+    }
+    
+    .result-header {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+}

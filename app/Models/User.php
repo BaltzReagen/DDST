@@ -34,4 +34,14 @@ class User extends Authenticatable // Now extending Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    public function isGoogleUser()
+    {
+        return !is_null($this->google_id);
+    }
+
+    public function canResetPassword()
+    {
+        return !$this->isGoogleUser() && !$this->isGuest;
+    }
 }

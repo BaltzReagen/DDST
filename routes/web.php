@@ -283,11 +283,19 @@ Route::get('/print-result/{screeningId}', function($screeningId) {
     }
 })->name('print.result');
 
-Route::get('/auth/google', function () {
-    return Socialite::driver('google')->redirect();
-})->name('google.login');
+Route::middleware(['web'])->group(function () {
+    Route::get('auth/google', [App\Http\Controllers\Auth\GoogleController::class, 'redirectToGoogle'])
+        ->name('google.login');
+    Route::get('auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'handleCallback'])
+        ->name('google.callback');
+});
 
-Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'callback'])->name('google.callback');
+// Protected routes
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
 
 
 Route::get('/privacy-policy', [App\Http\Controllers\PageController::class, 'privacyPolicy'])->name('privacy.policy');

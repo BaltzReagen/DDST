@@ -40,4 +40,22 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+    
+    protected function attemptLogin(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if ($user && $user->google_id) {
+            return back()
+                ->withInput($request->only('email'))
+                ->withErrors([
+                    'email' => 'Emel ini telah didaftarkan menggunakan Google. Sila gunakan butang "Login dengan Google" untuk log masuk.'
+                ]);
+        }
+
+        return Auth::attempt(
+            $request->only('email', 'password'),
+            $request->filled('remember')
+        );
+    }
 }

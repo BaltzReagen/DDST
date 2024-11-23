@@ -7,6 +7,7 @@
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Expires" content="0">
         <title>Assessment Result</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Add Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,12 +17,7 @@
         <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
         <!-- Add Mapbox JS -->
         <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
-        <style>
-            body {
-                font-family: 'Inter', sans-serif;
-                background-color: #f8f9fa;
-            }
-            
+        <style>         
             .result-header {
                 background: linear-gradient(135deg, #6c549c, #9c54b8);
                 color: white;
@@ -226,7 +222,7 @@
 
             /* Regular header logo */
             .main-header .site-logo {
-                height: 250px;
+                height: 150px;
                 width: auto;
             }
 
@@ -234,17 +230,31 @@
                 display: flex;
                 justify-content: center;
                 padding: 0.5rem 0;
+                margin-bottom: 0;
             }
 
             .result-page .site-logo {
-                height: 250px;
+                height: 150px;
                 width: auto;
                 margin-bottom: 0.5rem;
             }
 
             @media (max-width: 768px) {
-                .result-page .site-logo {
-                    height: 25px;
+                .container {
+                    padding: 1rem;
+                }
+
+                .result-header,
+                .result-card {
+                    padding: 1.5rem;
+                }
+
+                .developmental-age {
+                    font-size: 2rem;
+                }
+
+                .action-btn {
+                    width: 100%;
                 }
             }
 
@@ -260,13 +270,7 @@
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-            }
-
-            .result-page .logo-container {
-                display: flex;
-                justify-content: center;
-                padding: 0.5rem 0;
-                margin-bottom: -1rem;
+                padding-top: 0.01rem !important;
             }
 
             footer {
@@ -279,9 +283,17 @@
                 margin-top: auto;
             }
         </style>
+        <link rel="stylesheet" href="{{ asset('css/result.css') }}">
     </head>
 
     <body class="result-page">
+
+        <div class="background-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
         <div class="logo-container">
             <a href="{{ Auth::check() && !Auth::user()->isGuest ? route('dashboard') : url('/') }}" class="logo-wrapper">
                 <img src="{{ asset('images/logo.png') }}" alt="DDST Logo" class="site-logo">
@@ -370,7 +382,12 @@
                     @if(!Auth::check())
                     <div class="alert alert-info mt-4">
                         <i class="material-icons">account_circle</i>
-                        <p class="mb-0">Daftar akaun untuk menyimpan keputusan saringan ini dan melihat sejarah penilaian anak anda pada bila-bila masa.</p>
+                        <p class="mb-0">Daftar akaun untuk:</p>
+                        <ul>
+                            <li>Menyimpan saringan masa hadapan dalam akaun anda</li>
+                            <li>Melihat sejarah saringan pada bila-bila masa</li>
+                            <li>Memantau perkembangan anak anda</li>
+                        </ul>
                     </div>
                     @endif
 

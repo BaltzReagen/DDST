@@ -7,6 +7,7 @@
     <title>Register</title>
 
     <!-- Fonts -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -33,6 +34,13 @@
 
 <body>
     @include('components.logo-header')
+
+    <div class="background-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
     <div class="login">
         <div class="back-button">
             <button class="back-btn" onclick="window.location='{{ url('form') }}'"><span>←</span> Kembali</button>
@@ -57,20 +65,26 @@
                 <form action="{{ route('register.store') }}" method="POST" onsubmit="validatePasswords(event)">
                     @csrf
                     <div class="login-form-group">
-                        <label for="username">Nama Pengguna</label>
-                        <input type="text" id="username" name="username" placeholder="Masukkan Nama Pengguna" required>
+                        <label for="username">Nama Pengguna <span class="required-indicator">*</span></label>
+                        <input type="text" id="username" name="username" 
+                               value="{{ old('username') }}" 
+                               placeholder="Masukkan Nama Pengguna" required>
                     </div>
                     <div class="login-form-group">
-                        <label for="email">Emel</label>
-                        <input type="email" name="email" id="email" placeholder="Masukkan Emel" required>
+                        <label for="email">Emel <span class="required-indicator">*</span></label>
+                        <input type="email" name="email" id="email" 
+                               value="{{ old('email') }}" 
+                               placeholder="Masukkan Emel" required>
                     </div>
                     <div class="login-form-group">
-                        <label for="password">Kata Laluan</label>
-                        <input type="password" name="password" id="password" placeholder="Masukkan Kata Laluan" required>
+                        <label for="password">Kata Laluan <span class="required-indicator">*</span></label>
+                        <input type="password" name="password" id="password" 
+                               placeholder="Masukkan Kata Laluan (minimum 8 aksara)" required>
                     </div>
                     <div class="login-form-group">
-                        <label for="confirm-password">Sahkan Kata Laluan</label>
-                        <input type="password" name="password_confirmation" id="confirm-password" placeholder="Sahkan Kata Laluan" required>
+                        <label for="confirm-password">Sahkan Kata Laluan <span class="required-indicator">*</span></label>
+                        <input type="password" name="password_confirmation" id="confirm-password" 
+                               placeholder="Sahkan Kata Laluan" required>
                     </div>
                     <button type="submit" class="login-page-btn">DAFTAR</button>
                 </form>

@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class GoogleController extends Controller
 {
@@ -24,43 +25,57 @@ class GoogleController extends Controller
     /**
      * Handle Google callback
      */
-    public function callback()
+    public function handleCallback()
     {
         try {
             $googleUser = Socialite::driver('google')->user();
+            \Log::info('Google user retrieved', ['email' => $googleUser->email]);
             
-            // First try to find user by google_id
-            $user = User::where('google_id', $googleUser->id)->first();
+            // Check if user exists with this email
+            $existingUser = User::where('email', $googleUser->email)->first();
             
-            // If not found by google_id, try to find by email
-            if (!$user) {
-                $user = User::where('email', $googleUser->email)->first();
-                
-                if ($user) {
-                    // Update existing user with google_id
-                    $user->update([
-                        'google_id' => $googleUser->id
-                    ]);
-                } else {
-                    // Create new user with unique username
-                    $username = $this->generateUniqueUsername($googleUser->name);
-                    $user = User::create([
-                        'username' => $username,
-                        'email' => $googleUser->email,
-                        'google_id' => $googleUser->id,
-                        'password' => encrypt('dummy-password'),
-                        'isGuest' => false
-                    ]);
+            if ($existingUser) {
+                \Log::info('Existing user found', ['id' => $existingUser->id]);
+                // Check if this user was created via regular registration
+                if (!$existingUser->google_id) {
+                    return redirect()->route('login')
+                        ->with('error', 'Emel ini telah didaftarkan menggunakan kaedah pendaftaran biasa. Sila log masuk menggunakan kata laluan anda.');
                 }
+                
+                Auth::login($existingUser);
+                
+                try {
+                    $this->transferGuestScreenings($existingUser);
+                } catch (\Exception $e) {
+                    \Log::error('Error transferring guest screenings: ' . $e->getMessage());
+                }
+                
+                return redirect()->route('dashboard');
             }
 
-            Auth::login($user);
-            return redirect()->route('dashboard');
+            // Create new user
+            $newUser = User::create([
+                'username' => $this->generateUniqueUsername($googleUser->name),
+                'email' => $googleUser->email,
+                'google_id' => $googleUser->id,
+                'password' => bcrypt(Str::random(16)),
+                'isGuest' => false
+            ]);
 
-        } catch (Exception $e) {
+            Auth::login($newUser);
+            
+            try {
+                $this->transferGuestScreenings($newUser);
+            } catch (\Exception $e) {
+                \Log::error('Error transferring guest screenings: ' . $e->getMessage());
+            }
+            
+            return redirect()->route('dashboard');
+            
+        } catch (\Exception $e) {
             \Log::error('Google Login Error: ' . $e->getMessage());
             return redirect()->route('login')
-                ->with('error', 'Google login failed. Please try again.');
+                ->with('error', 'Ralat semasa log masuk menggunakan Google. Sila cuba lagi.');
         }
     }
 
@@ -87,40 +102,41 @@ class GoogleController extends Controller
      */
     private function transferGuestScreenings($user)
     {
-        // Get the guest user's screenings from the current session
-        $screeningId = session('screening_id');
-        if ($screeningId) {
-            $screening = Screening::with('milestoneProgress')->find($screeningId);
+        // Get all guest screenings from screening_milestone_progress
+        $guestScreenings = \App\Models\ScreeningMilestoneProgress::whereHas('screening', function($query) {
+            $query->whereHas('user', function($q) {
+                $q->where('isGuest', true);
+            });
+        })->get();
+
+        foreach ($guestScreenings as $guestScreening) {
+            $screening = $guestScreening->screening;
             
-            if ($screening) {
-                // Create new screening history entry
-                ScreeningHistory::create([
-                    'user_id' => $user->id,
-                    'fname' => $screening->fname,
-                    'child_name' => $screening->child_name,
-                    'child_dob' => $screening->child_dob,
-                    'child_age_in_months' => $screening->child_age_in_months,
-                    'child_gender' => $screening->child_gender,
-                    'milestone_responses' => $screening->milestoneProgress ? 
-                        json_decode($screening->milestoneProgress->responses, true) : null,
-                    'has_delay' => session('has_delay_' . $screeningId, false),
-                    'developmental_age' => session('final_developmental_age_' . $screeningId, 
-                        $screening->child_age_in_months)
-                ]);
+            // Create new screening history record
+            \App\Models\ScreeningHistory::create([
+                'user_id' => $user->id,
+                'screening_id' => $screening->id,
+                'first_screening_id' => $guestScreening->first_screening_id,
+                'fname' => $screening->fname,
+                'child_name' => $screening->child_name,
+                'child_dob' => $screening->child_dob,
+                'child_age_in_months' => $screening->child_age_in_months,
+                'child_gender' => $screening->child_gender,
+                'milestone_responses' => $guestScreening->responses,
+                'checklist_age' => $guestScreening->checklist_age,
+                'has_delay' => $guestScreening->has_delay,
+                'developmental_age' => $guestScreening->developmental_age
+            ]);
 
-                // Clean up guest data
-                if ($screening->user && $screening->user->isGuest) {
-                    $screening->user->delete(); // Delete guest user
-                }
-                $screening->delete(); // Delete original screening
+            // Delete the guest screening progress
+            $guestScreening->delete();
+            
+            // Delete the guest user and screening
+            if ($screening->user && $screening->user->isGuest) {
+                $screening->user->delete();
             }
+            $screening->delete();
         }
-
-        // Clear session data
-        session()->forget([
-            'screening_id',
-            'has_delay_' . $screeningId,
-            'final_developmental_age_' . $screeningId
-        ]);
     }
+
 }

@@ -8,12 +8,20 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0"
     <title>{{ $child_age_in_months }} Month Milestone Checklist</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     @include('components.logo-header')
+    
+    <div class="background-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
     <div class="back-button">
         <button class="back-btn" id="returnButton"><span>←</span> Kembali</button>
     </div>
@@ -27,6 +35,10 @@
                 ($child_age_in_months <= 18 ? $child_age_in_months + 5 : 
                 $child_age_in_months + 11)) }} bulan bagi tujuan pendidikan)</span>
         </h2>
+
+        <div class="milestone-note">
+            <p><span class="critical-indicator">!</span> Soalan yang ditandakan dengan asterisk (<span class="critical-indicator">*</span>) adalah soalan kritikal. Kanak-kanak akan gagal senarai semak ini jika gagal menjawab 1 soalan kritikal atau 2 soalan bukan kritikal.</p>
+        </div>
 
         <!-- Navigation for domain types -->
         <div class="domain-tabs">
@@ -44,13 +56,19 @@
             @foreach($milestoneQuestions as $question)
             <div class="milestone-question" data-domain="{{ $question->domain }}">
                 <div class="question-text">
-                    <p>{{ $question->description }} @if($question->isCritical) (*) @endif</p>
+                    <p>{{ $question->description }} @if($question->isCritical) <span class="critical-indicator">*</span> @endif</p>
                 </div>
                 <div class="media">
                     @if($question->youtube_title !== 'unavailable')
                         <iframe src="https://www.youtube.com/embed/{{ $question->key }}" frameborder="0" allowfullscreen></iframe>
                     @else
-                        <img src="{{ asset('images/image-coming-soon.jpg') }}" alt="Image Coming Soon">
+                        @if($question->image_path !== 'unavailable')
+                            <div style="display: none">Debug Path: {{ asset($question->image_path) }}</div>
+                            <img src="{{ asset($question->image_path) }}" alt="Milestone Image" 
+                                 onerror="console.log('Failed to load image:', this.src); this.src='{{ asset('images/image-coming-soon.jpg') }}';">
+                        @else
+                            <img src="{{ asset('images/image-coming-soon.jpg') }}" alt="Image Coming Soon">
+                        @endif
                     @endif
                 </div>
                 <div class="response-buttons">
@@ -69,7 +87,7 @@
     <div id="overlay" class="overlay"></div>
     <div id="popup-modal" class="modal">
         <div class="modal-content">
-            <p>Since the child failed to achieve all the milestones expected of their age, they now need to complete the previous age checklist to assess their current developmental age.</p>
+            <p>Oleh kerana anak tidak mencapai semua perkembangan yang sepatutnya pada umur ini, mereka perlu melengkapkan senarai semak umur sebelumnya untuk menilai tahap perkembangan semasa mereka.</p>
             <button type="button" id="understood-btn" class="understood-button">Understood</button>
         </div>
     </div>

@@ -8,7 +8,7 @@
         <meta http-equiv="Expires" content="0">
         <title>Form</title>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/form.css') }}">
     </head>
 
     <body>
@@ -24,13 +24,13 @@
             }
         @endphp
 
-        <div class="page-container">
-            <div class="back-button">
-                <button class="back-btn" onclick="window.location='{{ url('/') }}'">
-                    <span>←</span> Kembali
-                </button>
-            </div>
+        <div class="background-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
 
+        <div class="page-container">
             <div class="form-container">
                 <div class="form-header">
                     <h1>Alat Saringan Perkembangan Kanak-kanak</h1>
@@ -43,31 +43,32 @@
                         </p>
                     @endauth
                     
-                    <p class="required-note">* Ruangan wajib diisi</p>
+                    <p class="required-note" style="color: crimson"><span>*</span> Ruangan wajib diisi</p>
                 </div>
 
                 <form class="initial" action="{{ route('screenings.store') }}" method="POST">
                     @csrf
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="first-name">Nama Ibu/Bapa <span class="required">*</span></label>
+                            <label for="first-name">Nama Ibu/Bapa <span class="required-indicator">*</span></label>
                             <input type="text" 
                                 id="fname" 
                                 name="fname" 
-                                value="{{ Auth::check() ? App\Helpers\StringHelper::formatFullName(Auth::user()->username) : old('fname') }}" 
+                                value="{{ Auth::check() && Auth::user()->username ? App\Helpers\StringHelper::formatFullName(Auth::user()->username) : old('fname') }}" 
+                                placeholder="Masukkan Nama"
                                 class="form-control" 
                                 required>
                         </div>
                         <div class="form-group">
-                            <label for="child-name">Nama Anak <span class="required">*</span></label>
+                            <label for="child-name">Nama Anak <span class="required-indicator">*</span></label>
                             <input type="text" name="child_name" id="child-name" placeholder="Masukkan Nama Anak" required>
                         </div>
                         <div class="form-group">
-                            <label for="dob">Tarikh Lahir <span class="required">*</span></label>
+                            <label for="dob">Tarikh Lahir <span class="required-indicator">*</span></label>
                             <input type="date" name="dob" id="dob" required>
                         </div>
                         <div class="form-group">
-                            <label for="gender">Jantina <span class="required">*</span></label>
+                            <label for="gender">Jantina <span class="required-indicator">*</span></label>
                             <select name="gender" id="gender" required>
                                 <option value="" disabled selected>Pilih Jantina</option>
                                 <option value="M">Lelaki</option>
@@ -92,11 +93,13 @@
                     </div>
                 @endguest
             </div>
-
-            <footer class="login-footer">
-                <p>&copy; 2024 - Kevin - All Rights Reserved</p>
-            </footer>
         </div>
+
+        <footer class="login-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 - Kevin - All Rights Reserved</p>
+            </div>
+        </footer>
 
         <script>
             window.onpageshow = function(event) {

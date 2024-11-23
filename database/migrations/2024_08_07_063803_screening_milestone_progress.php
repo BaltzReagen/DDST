@@ -17,6 +17,7 @@ return new class extends Migration
             $table->json('responses');
             $table->integer('checklist_age')->nullable();
             $table->boolean('has_delay')->default(false);
+            $table->integer('developmental_age')->nullable();
             $table->timestamps();
         
             $table->foreign('screening_id')->references('id')->on('screenings')->onDelete('cascade');
