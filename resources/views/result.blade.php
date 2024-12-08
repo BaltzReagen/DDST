@@ -392,9 +392,27 @@
                     @endif
 
                     <div class="action-buttons">
-                        <a href="{{ route('retake.test') }}" class="btn btn-warning action-btn">
-                            <i class="material-icons">replay</i> Ulang Ujian
-                        </a>
+                        @php
+                            use Illuminate\Support\Facades\Log;
+
+                            $route = Auth::check() && $isViewingHistory 
+                                ? route('questionnaire.retry', ['screeningId' => $screening->id]) 
+                                : route('retake.test');
+
+                            Log::info('Activated route: ' . $route);
+                        @endphp
+
+                        @if($isViewingHistory)
+                            <a href="{{ route('questionnaire.retry', ['screeningId' => $screening->id]) }}" 
+                            class="btn btn-warning action-btn">
+                                <i class="material-icons">replay</i> Retake from History
+                            </a>
+                        @else
+                            <!-- Original button for other contexts -->
+                            <a href="{{ route('retake.test') }}" class="btn btn-warning action-btn">
+                                <i class="material-icons">replay</i> Ulang Ujian
+                            </a>
+                        @endif
 
                         <a href="{{ route('print.result', ['screeningId' => $screening->id]) }}" 
                             class="btn btn-info action-btn"
@@ -402,10 +420,6 @@
                             onclick="handlePdfDownload(event, this)">
                             <i class="material-icons">download</i> 
                             <span>Muat Turun PDF</span>
-                        </a>
-
-                        <a href="{{ route('feedback') }}" class="btn btn-success action-btn">
-                            <i class="material-icons">feedback</i> Maklum Balas
                         </a>
 
                         @guest
@@ -618,7 +632,6 @@
             </script>
 
             <!-- Add info box container below map -->
-            <div id="map"></div>
             <div id="medical-center-info" style="display: none;">
                 <div class="info-content">
                     <h4 id="facility-name"></h4>

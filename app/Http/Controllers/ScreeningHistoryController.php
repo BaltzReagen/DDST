@@ -6,6 +6,7 @@ use App\Models\Screening;
 use App\Models\ScreeningHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ScreeningHistoryController extends Controller
 {
@@ -79,6 +80,7 @@ class ScreeningHistoryController extends Controller
 
         $hasDelay = $screening->has_delay;
         $developmentalAge = $screening->developmental_age;
+        $isViewingHistory = true;
         
         $healthcareCenter = $hasDelay ? (object)[
             'name' => 'Klinik Kesihatan Putrajaya Presint 9',
@@ -90,6 +92,6 @@ class ScreeningHistoryController extends Controller
             'longitude' => 101.6965
         ] : null;
 
-        return view('result', compact('screening', 'hasDelay', 'healthcareCenter', 'developmentalAge'));
+        return view('result', compact('screening', 'hasDelay', 'healthcareCenter', 'developmentalAge', 'isViewingHistory'));
     }
 }

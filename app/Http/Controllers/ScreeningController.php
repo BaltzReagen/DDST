@@ -151,7 +151,8 @@ class ScreeningController extends Controller
             'screening_id' => $screeningId,
             'first_screening_id' => $firstScreeningId,
             'user_id' => Auth::id(),
-            'is_guest' => Auth::guest()
+            'is_guest' => Auth::guest(),
+            'is_retry' => Session::has('is_retry')
         ]);
 
         // Calculate results
@@ -187,21 +188,32 @@ class ScreeningController extends Controller
             if ($previousAgeGroup) {
                 // Store progress differently based on user type
                 if (Auth::check() && !Auth::user()->isGuest) {
-                    // For logged-in users, store in ScreeningHistory
-                    $screeningHistory = ScreeningHistory::create([
-                        'user_id' => Auth::id(),
-                        'screening_id' => $screeningId,
-                        'first_screening_id' => $firstScreeningId,
-                        'fname' => $screening->fname,
-                        'child_name' => $screening->child_name,
-                        'child_dob' => $screening->child_dob,
-                        'child_age_in_months' => $screening->child_age_in_months,
-                        'child_gender' => $screening->child_gender,
-                        'milestone_responses' => json_encode($milestoneResponses),
-                        'checklist_age' => $currentAgeGroup,
-                        'has_delay' => $hasDelay,
-                        'developmental_age' => $currentAgeGroup
-                    ]);
+                    if (Session::has('is_retry')) {
+                        // Update existing record for retry
+                        $screeningHistory = ScreeningHistory::findOrFail($screeningId);
+                        $screeningHistory->update([
+                            'milestone_responses' => json_encode($milestoneResponses),
+                            'checklist_age' => $currentAgeGroup,
+                            'has_delay' => $hasDelay,
+                            'developmental_age' => $currentAgeGroup
+                        ]);
+                    } else {
+                        // Create new record for normal flow
+                        $screeningHistory = ScreeningHistory::create([
+                            'user_id' => Auth::id(),
+                            'screening_id' => $screeningId,
+                            'first_screening_id' => $firstScreeningId,
+                            'fname' => $screening->fname,
+                            'child_name' => $screening->child_name,
+                            'child_dob' => $screening->child_dob,
+                            'child_age_in_months' => $screening->child_age_in_months,
+                            'child_gender' => $screening->child_gender,
+                            'milestone_responses' => json_encode($milestoneResponses),
+                            'checklist_age' => $currentAgeGroup,
+                            'has_delay' => $hasDelay,
+                            'developmental_age' => $currentAgeGroup
+                        ]);
+                    }
                 } else {
                     // For guests, store in ScreeningMilestoneProgress
                     $milestoneProgress = ScreeningMilestoneProgress::create([
@@ -223,22 +235,34 @@ class ScreeningController extends Controller
 
         // If no delay or no previous age group available, store final results
         if (Auth::check() && !Auth::user()->isGuest) {
-            $screeningHistory = ScreeningHistory::create([
-                'user_id' => Auth::id(),
-                'screening_id' => $screeningId,
-                'first_screening_id' => $firstScreeningId,
-                'fname' => $screening->fname,
-                'child_name' => $screening->child_name,
-                'child_dob' => $screening->child_dob,
-                'child_age_in_months' => $screening->child_age_in_months,
-                'child_gender' => $screening->child_gender,
-                'milestone_responses' => json_encode($milestoneResponses),
-                'checklist_age' => $currentAgeGroup,
-                'has_delay' => $hasDelay,
-                'developmental_age' => $currentAgeGroup
-            ]);
+            if (Session::has('is_retry')) {
+                // Update existing record for retry
+                $screeningHistory = ScreeningHistory::findOrFail($screeningId);
+                $screeningHistory->update([
+                    'milestone_responses' => json_encode($milestoneResponses),
+                    'checklist_age' => $currentAgeGroup,
+                    'has_delay' => $hasDelay,
+                    'developmental_age' => $currentAgeGroup
+                ]);
+            } else {
+                // Create new record for normal flow
+                $screeningHistory = ScreeningHistory::create([
+                    'user_id' => Auth::id(),
+                    'screening_id' => $screeningId,
+                    'first_screening_id' => $firstScreeningId,
+                    'fname' => $screening->fname,
+                    'child_name' => $screening->child_name,
+                    'child_dob' => $screening->child_dob,
+                    'child_age_in_months' => $screening->child_age_in_months,
+                    'child_gender' => $screening->child_gender,
+                    'milestone_responses' => json_encode($milestoneResponses),
+                    'checklist_age' => $currentAgeGroup,
+                    'has_delay' => $hasDelay,
+                    'developmental_age' => $currentAgeGroup
+                ]);
+            }
 
-            Session::forget(['first_screening_id', 'screening_in_progress']);
+            Session::forget(['first_screening_id', 'screening_in_progress', 'is_retry']);
             Session::put('questionnaire_completed', true);
             
             return redirect()->route('screening.result', ['screeningId' => $screeningHistory->id]);
@@ -252,7 +276,7 @@ class ScreeningController extends Controller
                 'developmental_age' => $currentAgeGroup
             ]);
 
-            Session::forget(['first_screening_id', 'screening_in_progress']);
+            Session::forget(['first_screening_id', 'screening_in_progress', 'is_retry']);
             Session::put('questionnaire_completed', true);
             
             return redirect()->route('screening.result', ['screeningId' => $screeningId]);
@@ -279,6 +303,7 @@ class ScreeningController extends Controller
             $allProgress = null;
             $developmentalAge = null;
             $hasDelay = false;
+            $isViewingHistory = false;
 
             if (Auth::check() && !Auth::user()->isGuest) {
                 $screening = ScreeningHistory::where('id', $screeningId)
@@ -292,6 +317,8 @@ class ScreeningController extends Controller
                     ]);
                     abort(404, 'No screening history found');
                 }
+
+                $isViewingHistory = true;
 
                 // Get all related screening history records for this screening session
                 $allScreeningHistory = ScreeningHistory::where('user_id', Auth::id())
@@ -330,7 +357,8 @@ class ScreeningController extends Controller
                 'hasDelay',
                 'developmentalAge',
                 'redirectUrl',
-                'allProgress'
+                'allProgress',
+                'isViewingHistory'
             ));
 
         } catch (\Exception $e) {
@@ -365,5 +393,36 @@ class ScreeningController extends Controller
         return redirect()
             ->route('screening.history')
             ->with('success', 'Rekod saringan telah berjaya dipadamkan.');
+    }
+
+    public function retryQuestionnaire($screeningId)
+    {
+        try {
+            \Log::debug('Starting retryQuestionnaire', [
+                'screeningId' => $screeningId,
+                'user_id' => Auth::id()
+            ]);
+            
+            $screening = ScreeningHistory::where('id', $screeningId)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
+            
+            Session::forget(['questionnaire_completed']);
+            Session::put('screening_in_progress', true);
+            Session::put('is_retry', true); // Add this flag
+            
+            \Log::debug('Screening found, redirecting to questionnaire', [
+                'screening_id' => $screening->id,
+                'age_group' => $screening->checklist_age
+            ]);
+
+            return redirect()->route('questionnaire.show', [
+                'childId' => $screening->id,
+                'ageGroup' => $screening->checklist_age
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error in retryQuestionnaire: ' . $e->getMessage());
+            abort(404, 'Screening not found');
+        }
     }
 }

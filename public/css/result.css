@@ -29,7 +29,7 @@ body {
 
 .container {
     max-width: 1200px;
-    margin: 62px auto 2rem;
+    margin: 62px auto 1rem;
     padding: 0 2rem;
 }
 
@@ -55,7 +55,7 @@ body {
     background: white;
     padding: 2.5rem;
     border-radius: 25px;  /* More rounded corners */
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     border: 3px solid #FAD0C4;  /* Soft border */
 }
@@ -88,6 +88,7 @@ body {
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 2rem;
+    margin-bottom: 0;
 }
 
 .action-btn {
@@ -185,6 +186,7 @@ body {
 
 /* Footer */
 footer {
+    margin-top: 1rem;
     text-align: center;
     padding: 2rem 0;
     color: var(--neutral-600);
@@ -193,11 +195,13 @@ footer {
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
+        margin-bottom: 0.5rem;
     }
 
     .result-header,
     .result-card {
         padding: 1.5rem;
+        margin-bottom: 0.5rem;
     }
 
     .developmental-age {
@@ -206,6 +210,7 @@ footer {
 
     .action-btn {
         width: 100%;
+        margin-top: 1rem;
     }
 }
 
@@ -448,5 +453,25 @@ footer {
     .result-header {
         padding: 1rem;
         margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .result-card {
+        padding: 2rem;
+        border-radius: 20px;
+    }
+
+    .developmental-age {
+        font-size: 2rem;
+    }
+
+    .detail-label, .detail-value {
+        font-size: 0.8rem;
+    }
+
+    .action-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
     }
 }

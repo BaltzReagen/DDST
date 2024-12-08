@@ -19,6 +19,7 @@ class User extends Authenticatable // Now extending Authenticatable
         'isGuest',
         'email',
         'google_id',
+        'rememberToken',
     ];
 
     protected $hidden = [

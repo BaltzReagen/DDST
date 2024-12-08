@@ -817,7 +817,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Membina menara menggunakan tujuh blok atau kiub mainan.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_79.jpg",   
             ],
             [
                 'id' => 80,
@@ -827,7 +827,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Meniru lukisan garisan menegak (contoh: I).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_80.jpg",   
             ],
             [
                 'id' => 81,
@@ -837,7 +837,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Boleh memasukkan tali ke dalam lubang manik besar.',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_81.jpg",   
             ],
             [
                 'id' => 82,
@@ -1101,7 +1101,7 @@ class MilestoneSeeder extends Seeder
                 'description' => 'Meniru tanda palang ( + ).',
                 'youtube_title' => 'unavailable',
                 'key' => 'unavailable',
-                'image_path' => $imagePath,   
+                'image_path' => "/images/milestone_107.jpg",   
             ],
             [
                 'id' => 108,

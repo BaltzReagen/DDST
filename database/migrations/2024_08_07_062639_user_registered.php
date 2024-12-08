@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('isGuest')->default(false); // Default value for registered users
             $table->string('email')->nullable();
             $table->string('google_id')->nullable();
+            $table->rememberToken();
             $table->timestamps();
 
             // Optional: Add index for better query performance

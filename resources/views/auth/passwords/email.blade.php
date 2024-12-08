@@ -21,6 +21,9 @@
             <div class="alert alert-info">
                 <p>Nota: Jika anda mendaftar menggunakan Google, sila gunakan butang "Login dengan Google" di halaman log masuk.</p>
             </div>
+            <div class="alert alert-info">
+                <p>Nota: Permintaan tetapan semula kata laluan mungkin berada dalam folder spam e-mel anda.</p>
+            </div>
 
             @if (session('status'))
                 <div class="alert alert-success">

@@ -34,6 +34,7 @@
             <div class="form-container">
                 <div class="form-header">
                     <h1>Alat Saringan Perkembangan Kanak-kanak</h1>
+                        <p>Nota: Alat ini hanya meliputi anak-anak dari umur 1 bulan hingga 6 tahun.</p>
                     @auth
                         <p>Sila lengkapkan borang di bawah untuk memulakan saringan perkembangan kanak-kanak.</p>
                     @else

@@ -26,61 +26,67 @@
         <button class="back-btn" id="returnButton"><span>←</span> Kembali</button>
     </div>
 
-    <div class="questionnaire-container">
-        <h2>
-            <span class="title-main">SENARAI SEMAK PENGESANAN {{ $child_age_in_months >= 18 ? 'PERKEMBANGAN KANAK-KANAK' : 'PERKEMBANGAN BAYI' }} {{ $child_age_in_months >= 24 ? floor($child_age_in_months/12) . ' TAHUN' : $child_age_in_months . ' BULAN' }}</span>
-            <span class="title-sub">(Untuk kegunaan {{ $child_age_in_months >= 18 ? 'kanak-kanak' : 'bayi' }} berumur {{ $child_age_in_months }} bulan hingga 
-                {{ $child_age_in_months == 1 ? '2' : 
-                ($child_age_in_months <= 9 ? $child_age_in_months + 2 : 
-                ($child_age_in_months <= 18 ? $child_age_in_months + 5 : 
-                $child_age_in_months + 11)) }} bulan bagi tujuan pendidikan)</span>
-        </h2>
-
-        <div class="milestone-note">
-            <p><span class="critical-indicator">!</span> Soalan yang ditandakan dengan asterisk (<span class="critical-indicator">*</span>) adalah soalan kritikal. Kanak-kanak akan gagal senarai semak ini jika gagal menjawab 1 soalan kritikal atau 2 soalan bukan kritikal.</p>
-        </div>
-
-        <!-- Navigation for domain types -->
+    <div class="screening-history-main">
         <div class="domain-tabs">
             @foreach ($domains as $domain)
                 @if ($milestoneQuestions->where('domain', $domain)->count() > 0)
-                    <button class="tab-button" data-domain="{{ $domain }}">{{ ucfirst(str_replace('_', ' ', $domain)) }}</button>
+                    <button class="tab-button" data-domain="{{ $domain }}">
+                        {{ ucfirst(str_replace('_', ' ', $domain)) }}
+                    </button>
                 @endif
             @endforeach
         </div>
 
-        <!-- Form to submit answers -->
-        <form id="milestone-form" method="POST" action="{{ route('submit.milestone') }}">
-            @csrf
-            <input type="hidden" name="screening_id" value="{{ $childId }}">
-            @foreach($milestoneQuestions as $question)
-            <div class="milestone-question" data-domain="{{ $question->domain }}">
-                <div class="question-text">
-                    <p>{{ $question->description }} @if($question->isCritical) <span class="critical-indicator">*</span> @endif</p>
-                </div>
-                <div class="media">
-                    @if($question->youtube_title !== 'unavailable')
-                        <iframe src="https://www.youtube.com/embed/{{ $question->key }}" frameborder="0" allowfullscreen></iframe>
-                    @else
-                        @if($question->image_path !== 'unavailable')
-                            <div style="display: none">Debug Path: {{ asset($question->image_path) }}</div>
-                            <img src="{{ asset($question->image_path) }}" alt="Milestone Image" 
-                                 onerror="console.log('Failed to load image:', this.src); this.src='{{ asset('images/image-coming-soon.jpg') }}';">
-                        @else
-                            <img src="{{ asset('images/image-coming-soon.jpg') }}" alt="Image Coming Soon">
-                        @endif
-                    @endif
-                </div>
-                <div class="response-buttons">
-                    <input type="hidden" name="milestones[{{ $question->id }}]" id="milestone-{{ $question->id }}" value="">
-                    <button type="button" class="yes-button" data-milestone-id="{{ $question->id }}">Yes</button>
-                    <button type="button" class="not-yet-button" data-milestone-id="{{ $question->id }}">Not Yet</button>
-                </div>
-            </div>
-            @endforeach
+        <div class="questionnaire-container">
+            <h2>
+                <span class="title-main">SENARAI SEMAK PENGESANAN {{ $child_age_in_months >= 18 ? 'PERKEMBANGAN KANAK-KANAK' : 'PERKEMBANGAN BAYI' }} {{ $child_age_in_months >= 24 ? floor($child_age_in_months/12) . ' TAHUN' : $child_age_in_months . ' BULAN' }}</span>
+                <span class="title-sub">(Untuk kegunaan {{ $child_age_in_months >= 18 ? 'kanak-kanak' : 'bayi' }} berumur {{ $child_age_in_months }} bulan hingga 
+                    {{ $child_age_in_months == 1 ? '2' : 
+                    ($child_age_in_months <= 9 ? $child_age_in_months + 2 : 
+                    ($child_age_in_months <= 18 ? $child_age_in_months + 5 : 
+                    $child_age_in_months + 11)) }} bulan bagi tujuan pendidikan)</span>
+            </h2>
 
-            <button type="submit" class="submit-button" disabled>Submit</button>
-        </form>
+            <div class="milestone-note">
+                <p><span class="critical-indicator">!</span> Soalan yang ditandakan dengan asterisk (<span class="critical-indicator">*</span>) adalah soalan kritikal. Kanak-kanak akan gagal senarai semak ini jika gagal menjawab 1 soalan kritikal atau 2 soalan bukan kritikal.</p>
+            </div>
+
+            <!-- New container for questions -->
+            <div class="questions-container">
+                <!-- Form to submit answers -->
+                <form id="milestone-form" method="POST" action="{{ route('submit.milestone') }}">
+                    @csrf
+                    <input type="hidden" name="screening_id" value="{{ $childId }}">
+                    @foreach($milestoneQuestions as $question)
+                    <div class="milestone-question" data-domain="{{ $question->domain }}">
+                        <div class="question-text">
+                            <p>{{ $question->description }} @if($question->isCritical) <span class="critical-indicator">*</span> @endif</p>
+                        </div>
+                        <div class="media">
+                            @if($question->youtube_title !== 'unavailable')
+                                <iframe src="https://www.youtube.com/embed/{{ $question->key }}" frameborder="0" allowfullscreen></iframe>
+                            @else
+                                @if($question->image_path !== 'unavailable')
+                                    <div style="display: none">Debug Path: {{ asset($question->image_path) }}</div>
+                                    <img src="{{ asset($question->image_path) }}" alt="Milestone Image" 
+                                         onerror="console.log('Failed to load image:', this.src); this.src='{{ asset('images/image-coming-soon.jpg') }}';">
+                                @else
+                                    <img src="{{ asset('images/image-coming-soon.jpg') }}" alt="Image Coming Soon">
+                                @endif
+                            @endif
+                        </div>
+                        <div class="response-buttons">
+                            <input type="hidden" name="milestones[{{ $question->id }}]" id="milestone-{{ $question->id }}" value="">
+                            <button type="button" class="yes-button" data-milestone-id="{{ $question->id }}">Yes</button>
+                            <button type="button" class="not-yet-button" data-milestone-id="{{ $question->id }}">Not Yet</button>
+                        </div>
+                    </div>
+                    @endforeach
+
+                    <button type="submit" class="submit-button" disabled>Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- Single Modal Implementation -->
@@ -210,6 +216,12 @@
                 questions.forEach(question => {
                     question.style.display = question.getAttribute('data-domain') === domain ? 'block' : 'none';
                 });
+                
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+
                 tabButtons.forEach(btn => btn.classList.remove('active'));
                 this.classList.add(this.classList.contains('completed') ? 'completed active' : 'active');
             }

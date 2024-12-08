@@ -64,10 +64,16 @@ Route::post('/logout', function (Request $request) {
     return redirect('/login'); // Redirect to the login page after logout
 })->name('logout');
 
+Route::get('/questionnaire/retry/{screeningId}', [ScreeningController::class, 'retryQuestionnaire'])
+    ->name('questionnaire.retry')
+    ->middleware(['auth'])
+    ->withoutMiddleware(['prevent-questionnaire-back']);
+
 //Questionnaire
 Route::get('/questionnaire/{childId}/{ageGroup?}', [ScreeningController::class, 'showQuestionnaire'])
     ->name('questionnaire.show')
     ->middleware('prevent-questionnaire-back');
+    
 Route::post('/submit-milestone', [ScreeningController::class, 'submitMilestone'])->name('submit.milestone');
 
 //Thank You Page

@@ -10,16 +10,25 @@ class PreventQuestionnaireBackHistory
 {
     public function handle(Request $request, Closure $next)
     {
-        // Check if questionnaire is completed or if there's no screening in progress
+        $routeName = $request->route()->getName();
+        
+        \Log::debug('PreventQuestionnaireBackHistory Middleware', [
+            'route' => $routeName,
+            'session' => [
+                'questionnaire_completed' => Session::has('questionnaire_completed'),
+                'screening_in_progress' => Session::has('screening_in_progress')
+            ]
+        ]);
+
+        // Always allow the retry route
+        if ($routeName === 'questionnaire.retry') {
+            return $next($request);
+        }
+
         if (Session::has('questionnaire_completed') || !Session::has('screening_in_progress')) {
             return redirect()->route('form');
         }
 
-        $response = $next($request);
-        
-        return $response->header('Cache-Control','no-cache, no-store, max-age=0, must-revalidate')
-                    ->header('Pragma','no-cache')
-                    ->header('Expires','0')
-                    ->header('X-Frame-Options', 'DENY');
+        return $next($request);
     }
 }

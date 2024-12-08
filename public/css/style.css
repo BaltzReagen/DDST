@@ -1,15 +1,12 @@
-/* Modern Color Palette */
 :root {
-    /* Primary Colors */
-    --primary-purple: #6366f1;    /* Indigo */
-    --primary-orange: #f97316;    /* Modern Orange */
-    --primary-blue: #3b82f6;      /* Bright Blue */
+    --primary-purple: #6366f1;    
+    --primary-orange: #f97316;  
+    --primary-blue: #3b82f6;      
     
-    /* Secondary Colors */
-    --secondary-yellow: #fbbf24;   /* Warm Yellow */
-    --secondary-coral: #f43f5e;    /* Vibrant Coral */
+    --secondary-yellow: #fbbf24;  
+    --secondary-coral: #f43f5e;    
     
-    /* Neutral Colors */
+  
     --neutral-50: #f8fafc;
     --neutral-100: #f1f5f9;
     --neutral-200: #e2e8f0;
@@ -20,14 +17,12 @@
     --neutral-700: #334155;
     --neutral-800: #1e293b;
     --neutral-900: #0f172a;
-    
-    /* Semantic Colors */
+
     --success: #22c55e;
     --warning: #eab308;
     --error: #ef4444;
     --info: #3b82f6;
-    
-    /* Shadows */
+
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -43,7 +38,6 @@
 body{
     background: linear-gradient(135deg, #fff5f5 0%, #fff0ea 100%);
     font-family: Arial, sans-serif;
-    /*background-color:#f4f4f4;*/
     color: #333;
     display: flex;
     flex-direction: column;
@@ -99,7 +93,6 @@ body{
     background-color: #ffa000;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 768px) {
     #title {
         font-size: 2em;
@@ -2118,7 +2111,10 @@ button[type="submit"]:not(:disabled) {
     margin-bottom: 40px;
     padding: 0 1.5rem;
     height: calc(100vh - 160px);
-    overflow: hidden;
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    gap: 2rem;
+    position: relative; /* Add relative positioning */
 }
 
 .screening-history-wrapper {
@@ -2254,7 +2250,7 @@ button[type="submit"]:not(:disabled) {
 }
 
 /* Delete Button */
-.screening-history-delete {
+.screening-history-delete, .retry-button {
     display: none;
     position: absolute;
     top: 50%;
@@ -2377,7 +2373,7 @@ button[type="submit"]:not(:disabled) {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .screening-history-main {
+    .screening-history-main, .history-container {
         margin-top: 60px;
         padding: 1rem;
     }
@@ -2392,7 +2388,7 @@ button[type="submit"]:not(:disabled) {
 }
 
 @media (max-width: 480px) {
-    .screening-history-main {
+    .screening-history-main, .history-container {
         margin-top: 50px;
     }
 
@@ -3110,4 +3106,702 @@ body {
 
 .feature-card:nth-child(3) {
     animation-delay: 0.8s;
+}
+
+/* Updated Layout Structure */
+questionnaire-container {
+    max-width: 1200px; /* Increased to accommodate side navigation */
+    margin: 2rem auto;
+    display: flex;
+    gap: 2rem;
+    padding: 0 1rem; /* Added horizontal padding */
+}
+
+ /* Vertical Domain Tabs */
+ domain-tabs {
+    position: sticky;
+    top: 2rem; /* Keeps tabs visible while scrolling */
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 200px; /* Fixed width for navigation */
+    max-height: calc(100vh - 4rem); /* Viewport height minus margins */
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+ }
+
+ .tab-button {
+    width: 100%;
+    text-align: left;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+ }
+
+ .tab-button:hover {
+    transform: translateX(4px);
+    background: #e5e7eb;
+ }
+
+ .tab-button.active {
+    background: #6366f1;
+    color: white;
+    font-weight: 600;
+ }
+
+ .tab-button.completed {
+    background: #10b981;
+    color: white;
+ }
+
+ /* Questions Container */
+ questions-container {
+    flex: 1;
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+ }
+
+ /* Responsive Design */
+ @media (max-width: 768px) {
+    .questionnaire-container {
+        flex-direction: column;
+        margin: 1rem;
+        padding: 0;
+    }
+    
+     .domain-tabs {
+        position: relative;
+        top: 0;
+        flex-direction: row;
+        overflow-x: auto;
+        min-width: unset;
+        padding: 1rem;
+        max-height: unset;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+     .tab-button {
+        white-space: nowrap;
+        min-width: max-content;
+    }
+     .tab-button:hover {
+        transform: translateY(-2px);
+    }
+     .questions-container {
+        padding: 1rem;
+    }
+}
+
+ /* Optional: Add visual indicator for active section */
+ tab-button::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: transparent;
+    border-radius: 0 4px 4px 0;
+    transition: background-color 0.2s ease;
+ }
+
+ .tab-button.active::before {
+    background: currentColor;
+ }
+
+
+ tab-button {
+    position: relative;
+    padding-left: 2.5rem;
+ }
+
+ .tab-button::after {
+    content: '→';
+    position: absolute;
+    right: 1rem;
+    opacity: 0;
+    transition: all 0.2s ease;
+ }
+
+ .tab-button:hover::after {
+    opacity: 1;
+    transform: translateX(4px);
+ }
+
+ .tab-button.active::after {
+    opacity: 1;
+ }
+
+ .screening-history-main, .history-container {
+    flex: 1;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    padding: 0 1.5rem;
+    height: calc(100vh - 160px);
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    gap: 2rem;
+    position: relative; /* Add relative positioning */
+}
+
+/* Domain Tabs - Left Side */
+.domain-tabs {
+    position: fixed;
+    top: 50%;
+    left: calc(50% - 500px);
+    transform: translateY(-50%);
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 200px;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+/* Questionnaire Container */
+.questionnaire-container {
+    width: 800px; /* Fixed width */
+    margin-left: 220px; /* Account for domain-tabs width + gap */
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .domain-tabs {
+        left: 20px; /* Adjust position for smaller screens */
+    }
+    
+    .questionnaire-container {
+        margin-left: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .screening-history-main, .history-container {
+        flex-direction: column;
+        padding: 1rem;
+        height: auto;
+    }
+
+    .domain-tabs {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        flex-direction: row;
+        overflow-x: auto;
+        min-width: unset;
+        max-height: unset;
+        margin-bottom: 1rem;
+    }
+
+    .questionnaire-container {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.tab-button {
+    width: 100%;
+    text-align: left;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tab-button:hover {
+    background: #e5e7eb;
+    transform: translateX(4px);
+}
+
+.tab-button.active {
+    background: #6366f1;
+    color: white;
+    font-weight: 600;
+}
+
+.tab-button.completed {
+    background: #10b981;
+    color: white;
+}
+
+/* Questionnaire Container - Adjust position */
+.questionnaire-container {
+    width: 800px;
+    margin-left: 240px; /* Increased margin to prevent overlap */
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    z-index: 1; /* Lower z-index than domain-tabs */
+}
+
+.domain-tabs {
+    position: absolute; /* Change from fixed to absolute */
+    left: -220px; /* Position to the left of the questionnaire container */
+    top: 0; /* Align with top of questionnaire container */
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    max-height: fit-content;
+    z-index: 10;
+}
+
+/* Questionnaire Container */
+.questionnaire-container {
+    position: relative; /* Add relative positioning */
+    width: 800px;
+    margin: 0 auto; /* Center the container */
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.tab-button {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+    background: #e5e7eb;
+}
+
+.tab-button.active {
+    background: #6366f1;
+    color: white;
+    font-weight: 600;
+}
+
+.tab-button.completed {
+    background: #10b981;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .domain-tabs {
+        left: -220px; /* Maintain left position */
+    }
+}
+
+@media (max-width: 768px) {
+    .screening-history-main, .history-container {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .domain-tabs {
+        position: relative;
+        left: 0;
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        margin-bottom: 1rem;
+    }
+
+    .questionnaire-container {
+        width: 100%;
+    }
+
+    .tab-button {
+        white-space: nowrap;
+        width: auto;
+    }
+}
+
+
+.screening-history-main {
+    flex: 1;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    padding: 0 1.5rem;
+    min-height: calc(100vh - 160px);
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    max-width: 1400px; 
+    margin-left: auto;
+    margin-right: 525px;
+    gap: 2rem; 
+}
+
+
+.history-container{
+    flex: 1;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    padding: 0 1.5rem;
+    min-height: calc(100vh - 160px);
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    max-width: 1400px; 
+    width: 1000px;
+    margin-left: 450px;
+    margin-right: 525px;
+    gap: 2rem; 
+}
+
+.domain-tabs {
+    position: sticky;
+    top: calc(60% - 30px - 16px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 300px;
+    flex-shrink: 0;
+    height: fit-content;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    z-index: 5;
+}
+
+.questionnaire-container {
+    flex: 1;
+    max-width: 800px; 
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+}
+
+.tab-button {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+    background: #e5e7eb;
+}
+
+.tab-button.active {
+    background: #6366f1;
+    color: white;
+    font-weight: 600;
+}
+
+.tab-button.completed {
+    background: #10b981;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .screening-history-main, .history-container {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .domain-tabs {
+        position: relative;
+        top: 0;
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        margin-bottom: 1rem;
+        margin-right: 0;
+    }
+
+    .questionnaire-container {
+        width: 100%;
+    }
+
+    .tab-button {
+        white-space: nowrap;
+        width: auto;
+    }
+}
+
+.screening-history-edit {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: transform 0.2s;
+    color: currentColor;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.screening-history-edit:hover {
+    transform: scale(1.1);
+}
+
+.retry-label {
+    display: none;
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-purple);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 1;
+}
+
+.retry-link {
+    display: none;
+    text-decoration: none;
+    color: var(--primary-purple);
+    font-weight: 600;
+    padding: 0.5rem;
+    text-align: center;
+    border-top: 1px solid var(--neutral-200);
+    transition: background-color 0.2s;
+}
+
+.retry-link:hover {
+    background-color: var(--neutral-100);
+}
+
+.screening-history-card {
+    position: relative;
+}
+
+.retry-button {
+    background-color: #4CAF50; 
+}
+
+.screening-history-delete:hover,
+.retry-button:hover {
+    background-color: #d32f2f; 
+}
+
+.retry-button:hover {
+    background-color: #45a049;
+}
+
+/* Main Container */
+.screening-history-main, .history-container {
+    flex: 1;
+    margin: 100px auto 40px;
+    padding: 0 1.5rem;
+    min-height: calc(100vh - 160px);
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    max-width: 1200px; /* Set a reasonable max-width */
+}
+
+.screening-history-wrapper {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    height: fit-content;
+    overflow: hidden;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .screening-history-main, .history-container {
+        max-width: 1000px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .screening-history-main, .history-container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 992px) {
+    .screening-history-main, .history-container {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 768px) {
+    .screening-history-main, .history-container {
+        margin-top: 60px;
+        padding: 1rem;
+        max-width: 100%;
+    }
+
+    .screening-history-wrapper {
+        padding: 1.5rem;
+    }
+
+    .screening-history-cards {
+        max-height: calc(100vh - 200px);
+    }
+}
+
+@media (max-width: 480px) {
+    .screening-history-main, .history-container {
+        margin-top: 50px;
+    }
+
+    .screening-history-wrapper {
+        padding: 1rem;
+    }
+}
+
+/* Base styles for the header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .back-btn, .submit-btn, .register-btn, .login-btn, .logout-button {
+        font-size: 0.7em;
+        padding: 0.3em 0.6em;
+    }
+
+    .form-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .form-container h1 {
+        font-size: 20px;
+    }
+
+    .form-container p {
+        font-size: 12px;
+    }
+
+    .questionnaire-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .tab-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .response-buttons button {
+        width: 100%;
+        max-width: 180px;
+    }
+
+    .submit-button {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .questionnaire-container {
+        width: 95%;
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+
+    .tab-button {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .milestone-question {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        width: 95%;
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+
+    .form-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-container p {
+        font-size: 0.9rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
 }

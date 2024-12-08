@@ -10,6 +10,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
 
     <body class="login">
@@ -49,7 +50,14 @@
                     </div>
                     <div class="login-form-group">
                         <label for="password">Kata Laluan</label>
-                        <input type="password" name="password" id="password" placeholder="Masukkan Kata Laluan">
+                        <div style="position: relative;">
+                            <input type="password" name="password" id="password" 
+                                placeholder="Masukkan Kata Laluan" required>
+                            <button type="button" id="toggle-password" 
+                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none;">
+                                <i class="fas fa-eye" id="toggle-icon"></i>
+                            </button>
+                        </div>
                     </div>
                     <button type="submit" class="login-page-btn">LOG MASUK</button>
                 </form>
@@ -78,10 +86,32 @@
         </footer>
 
         <script>
+            const togglePassword = document.getElementById('toggle-password');
+            const passwordField = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggle-icon');
+
             document.addEventListener('DOMContentLoaded', function() {
                 document.querySelector('.back-btn').addEventListener('click', function(){
                     window.location = '{{ url("form") }}';
                 });
+            });
+
+            togglePassword.addEventListener('mousedown', function() {
+                passwordField.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            });
+
+            togglePassword.addEventListener('mouseup', function() {
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            });
+
+            togglePassword.addEventListener('mouseleave', function() {
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
             });
         </script>
     </body>
